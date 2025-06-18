@@ -8,7 +8,14 @@ import { Router } from '@angular/router';
   styleUrl: './home.css'
 })
 export class Home {
-  private _router = inject(Router)
+
+  ngOnInit(){
+    
+  }
+
+  constructor(private _router: Router){
+
+  }
 
   navigateToRegister() {
     this._router.navigate(["/register"]);
