@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './page-not-found.css'
 })
 export class PageNotFound {
+  isAdmin = false;
 
   ngOnInit(){
     

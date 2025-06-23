@@ -13,8 +13,8 @@ export const routes: Routes = [
     { path: "register", component: Register, title: "Register" },
     { path: "login", component: Login, title: "Login" },
     { path: "products", component: ListProduct, title: "List Products" },
-    { path: "products/:id", component: DetailProduct, title: "Detail Product" },
     { path: "products/create", component: CreateProduct, title: "Create Products" },
-    { path: "products/update", component: UpdateProduct, title: "Update Products" },
+    { path: "products/:id", component: DetailProduct, title: "Detail Product" },
+    { path: "products/update/:id", component: UpdateProduct, title: "Update Products" },
     { path: "**", component: PageNotFound, title: "404" }
 ];
