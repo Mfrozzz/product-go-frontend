@@ -2,10 +2,19 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { Register } from './pages/register/register';
 import { Login } from './pages/login/login';
+import { CreateProduct } from './pages/create-product/create-product';
+import { UpdateProduct } from './pages/update-product/update-product';
+import { ListProduct } from './pages/list-product/list-product';
+import { DetailProduct } from './pages/detail-product/detail-product';
+import { PageNotFound } from './pages/page-not-found/page-not-found';
 
 export const routes: Routes = [
     { path: "", component: Home, title: "Product Go Project" },
     { path: "register", component: Register, title: "Register" },
     { path: "login", component: Login, title: "Login" },
-    { path: "**", redirectTo: "" }
+    { path: "products", component: ListProduct, title: "List Products" },
+    { path: "products/:id", component: DetailProduct, title: "Detail Product" },
+    { path: "products/create", component: CreateProduct, title: "Create Products" },
+    { path: "products/update", component: UpdateProduct, title: "Update Products" },
+    { path: "**", component: PageNotFound, title: "404" }
 ];

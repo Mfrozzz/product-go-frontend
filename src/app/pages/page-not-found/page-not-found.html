@@ -1,0 +1,51 @@
+<div class="min-h-screen flex flex-col">
+    <nav class="w-full flex items-center justify-between px-8 py-4 bg-white shadow">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-blue-600">Product</span>
+            <img src="https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg" alt="Go Logo" class="w-14 h-14 -m-3" />
+        </div>
+        <div class="flex gap-4">
+            <button (click)="navigateToLogin()" class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+                Sign In
+            </button>
+            <button (click)="navigateToRegister()" class="px-4 py-2 rounded border border-blue-500 text-blue-500 hover:bg-blue-50 transition">
+                Sign Up
+            </button>
+        </div>
+    </nav>
+
+    <div class="flex-1 flex flex-col items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="w-full h-full bg-gradient-to-br from-blue-50 via-white to-blue-100"></div>
+            <div class="absolute top-10 left-10 w-72 h-72 bg-blue-200 opacity-30 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-blue-400 opacity-20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-32 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-100 opacity-40 rounded-full blur-2xl"></div>
+        </div>
+        <h1 class="text-6xl font-extrabold mb-4 text-blue-700 drop-shadow-lg">404</h1>
+        <p class="text-2xl text-gray-600 mb-2">Page not Found</p>
+        <a (click)="navigateToHome()" class="mt-4 px-6 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+            Back to Home
+        </a>
+    </div>
+
+    <footer
+        class="w-full py-4 bg-white text-center text-gray-500 text-sm flex flex-col md:flex-row items-center justify-between px-6 gap-2">
+        <span>© 2025 ProductGo. By: Marcos Vinicius Schimaichel Boava</span>
+        <div class="flex items-center gap-4">
+            <span class="text-gray-400">Contact:</span>
+            <a href="https://github.com/Mfrozzz" target="_blank" rel="noopener" class="hover:text-blue-600 transition">
+                <svg class="w-6 h-6 inline" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.372.823 1.102.823 2.222v3.293c0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+            </a>
+            <a href="https://linkedin.com/in/marcos-vinicius-boava-660322293" target="_blank" rel="noopener"
+                class="hover:text-blue-600 transition">
+                <svg class="w-6 h-6 inline" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.966 0-1.75-.79-1.75-1.76 0-.97.784-1.76 1.75-1.76s1.75.79 1.75 1.76c0 .97-.784 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+</div>
