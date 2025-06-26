@@ -41,6 +41,7 @@
                 class="w-full py-2 rounded bg-blue-500 text-white font-semibold hover:bg-blue-600 transition">
                 Login
             </button>
+            <div *ngIf="errorMessage" class="text-red-500 mb-2">{{ errorMessage }}</div>
         </form>
     </div>
 

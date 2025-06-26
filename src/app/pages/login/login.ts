@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/user/login';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class Login {
   formLogin!: FormGroup;
   isSubmitted: boolean = false;
+  errorMessage: string = "";
+  userToken: string = "";
 
-  constructor(private _router: Router, private _formBuilder: FormBuilder){
+  constructor(private _router: Router, private _formBuilder: FormBuilder, private _userService: LoginService){
     
   }
 
@@ -24,9 +28,27 @@ export class Login {
   }
 
   onSubmit(){
-    this.isSubmitted = true;
+    if (this.formLogin.invalid) return;
+
     console.log(this.formLogin.value);
+    this.login();
     this.formLogin.reset();
+  }
+
+  login(){
+    this.isSubmitted = true;
+
+    this._userService.execute(this.formLogin.value).subscribe({
+      next: (response) => {
+        this.userToken = response.token;
+        localStorage.setItem("token", this.userToken);
+        console.log(this.userToken);
+        this._router.navigate(['/products']);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Register failed.';
+      }
+    });
   }
 
   navigateToRegister() {

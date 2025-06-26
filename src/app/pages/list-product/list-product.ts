@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../models/user';
+import { GetUser } from '../../services/user/get-user';
 
 @Component({
   selector: 'app-list-product',
@@ -13,6 +15,7 @@ export class ListProduct {
   username = 'Test';
   showDropdown = false;
   isAdmin = false;
+  user?: User;
 
   products = [
     { id: 1, name: 'Product 1' },
@@ -33,7 +36,20 @@ export class ListProduct {
   page = 1;
   perPage = 10;
 
-  constructor(private _router: Router){ }
+  ngOnInit(){
+    const token = localStorage.getItem("token");
+      if(!token){
+        this._router.navigate(["/login"]);
+      }
+    this._getUserService.execute(token).subscribe((user: User) => {
+      this.user = user;
+    });
+
+    // get products
+
+  }
+
+  constructor(private _router: Router, private _getUserService: GetUser){ }
 
   get filteredProducts() {
     return this.products.filter(p =>

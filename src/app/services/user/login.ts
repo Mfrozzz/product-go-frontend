@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class Login {
+export class LoginService {
   private PATH = environment.apiUrl;
   private _http = inject(HttpClient);
 
