@@ -47,7 +47,7 @@ export class Register {
     this.isSubmitted = true;
 
     try {
-      await this._userService.execute(this.formRegister.value);
+      this._userService.execute(this.formRegister.value);
 
       this._router.navigate(['/login']);
     } catch(err: any) {

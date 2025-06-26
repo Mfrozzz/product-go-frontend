@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { GetUser } from '../../services/user/get-user';
+import { ListProducts } from '../../services/product/list-products';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-list-product',
@@ -16,21 +18,7 @@ export class ListProduct {
   showDropdown = false;
   isAdmin = false;
   user?: User;
-
-  products = [
-    { id: 1, name: 'Product 1' },
-    { id: 2, name: 'Product 2' },
-    { id: 3, name: 'Product 3' },
-    { id: 4, name: 'Product 4' },
-    { id: 5, name: 'Product 5' },
-    { id: 6, name: 'Product 6' },
-    { id: 7, name: 'Product 7' },
-    { id: 8, name: 'Product 8' },
-    { id: 9, name: 'Product 9' },
-    { id: 10, name: 'Product 10' },
-    { id: 11, name: 'Product 11' },
-    { id: 12, name: 'Product 12' }
-  ];
+  products?: Product[];
 
   search = '';
   page = 1;
@@ -38,22 +26,33 @@ export class ListProduct {
 
   ngOnInit(){
     const token = localStorage.getItem("token");
-      if(!token){
-        this._router.navigate(["/login"]);
-      }
+    if(!token){
+      this._router.navigate(["/login"]);
+    }
+
     this._getUserService.execute(token).subscribe((user: User) => {
       this.user = user;
+      if(this.user.role === "admin"){
+        this.isAdmin = true;
+      }
     });
 
-    // get products
-
+    this._listProductsService.execute().subscribe({
+      next: (response) => {
+        console.log(response)
+        this.products = response || [];
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      }
+    });
   }
 
-  constructor(private _router: Router, private _getUserService: GetUser){ }
+  constructor(private _router: Router, private _getUserService: GetUser, private _listProductsService: ListProducts){ }
 
   get filteredProducts() {
-    return this.products.filter(p =>
-      p.name.toLowerCase().includes(this.search.toLowerCase())
+    return (this.products ?? []).filter(p =>
+      typeof p.name === 'string' && p.name.toLowerCase().includes(this.search.toLowerCase())
     );
   }
 

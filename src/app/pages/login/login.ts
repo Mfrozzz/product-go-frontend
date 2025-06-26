@@ -30,19 +30,17 @@ export class Login {
   onSubmit(){
     if (this.formLogin.invalid) return;
 
-    console.log(this.formLogin.value);
     this.login();
     this.formLogin.reset();
   }
 
-  login(){
+  async login(){
     this.isSubmitted = true;
 
     this._userService.execute(this.formLogin.value).subscribe({
       next: (response) => {
         this.userToken = response.token;
         localStorage.setItem("token", this.userToken);
-        console.log(this.userToken);
         this._router.navigate(['/products']);
       },
       error: (err) => {
