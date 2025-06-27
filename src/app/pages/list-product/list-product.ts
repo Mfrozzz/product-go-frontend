@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
@@ -14,29 +14,29 @@ import { Product } from '../../models/product';
   styleUrl: './list-product.css'
 })
 export class ListProduct {
-  username = 'Test';
   showDropdown = false;
   isAdmin = false;
   user?: User;
-  products?: Product[];
+  products: Product[] = [];
 
   search = '';
   page = 1;
   perPage = 10;
 
+  constructor(private _router: Router, private _getUserService: GetUser, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef){ }
+
   ngOnInit(){
+    if (typeof window === 'undefined') {return}
     const token = localStorage.getItem("token");
     if(!token){
       this._router.navigate(["/login"]);
+      return;
     }
 
-    this._getUserService.execute(token).subscribe((user: User) => {
-      this.user = user;
-      if(this.user.role === "admin"){
-        this.isAdmin = true;
-      }
-    });
+    this.listProducts();
+  }
 
+  listProducts(){
     this._listProductsService.execute().subscribe({
       next: (response) => {
         console.log(response)
@@ -44,11 +44,12 @@ export class ListProduct {
       },
       error: (err) => {
         console.error('Error fetching products:', err);
+      },
+      complete: () => {
+        this._cdr.detectChanges();
       }
     });
   }
-
-  constructor(private _router: Router, private _getUserService: GetUser, private _listProductsService: ListProducts){ }
 
   get filteredProducts() {
     return (this.products ?? []).filter(p =>
@@ -87,10 +88,6 @@ export class ListProduct {
 
   nextPage() {
     if (this.page < this.totalPages) this.page++;
-  }
-
-  logout() {
-
   }
 
 }

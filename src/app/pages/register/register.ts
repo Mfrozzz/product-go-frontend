@@ -35,10 +35,6 @@ export class Register {
     this.formRegister.reset();
   }
 
-  navigateToRegister() {
-    this._router.navigate(["/register"]);
-  }
-
   navigateToLogin() {
     this._router.navigate(["/login"]);
   }
