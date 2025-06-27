@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 
 export class DetailProduct {
   isSubmitted = false;
-  islogged = true;
   isAdmin = false;
-  showDropdown = false;
-  username = 'Test';
   product = {
     name: "test",
     price: 1.2
@@ -37,9 +34,5 @@ export class DetailProduct {
 
   deleteProduct(){
 
-  }
-
-  logout() {
-    console.log("logout")
   }
 }

@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   styleUrl: './page-not-found.css'
 })
 export class PageNotFound {
-  isAdmin = false;
 
   ngOnInit(){
     
@@ -16,14 +15,6 @@ export class PageNotFound {
 
   constructor(private _router: Router){
 
-  }
-
-  navigateToRegister() {
-    this._router.navigate(["/register"]);
-  }
-
-  navigateToLogin() {
-    this._router.navigate(["/login"]);
   }
 
   navigateToHome() {

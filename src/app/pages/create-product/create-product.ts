@@ -11,10 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class CreateProduct {
   productForm!: FormGroup;
   isSubmitted = false;
-  islogged = true;
   isAdmin = false;
-  showDropdown = false;
-  username = 'Test';
 
   constructor(private _formBuilder: FormBuilder) { }
 
@@ -34,7 +31,4 @@ export class CreateProduct {
     }
   }
 
-  logout() {
-    console.log("logout")
-  }
 }

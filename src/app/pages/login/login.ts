@@ -16,25 +16,25 @@ export class Login {
   errorMessage: string = "";
   userToken: string = "";
 
-  constructor(private _router: Router, private _formBuilder: FormBuilder, private _userService: LoginService){
-    
+  constructor(private _router: Router, private _formBuilder: FormBuilder, private _userService: LoginService) {
+
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.formLogin = this._formBuilder.group({
-      email: ["",[Validators.required, Validators.email]],
-      password: ["",[Validators.required, Validators.minLength(6)]]
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.formLogin.invalid) return;
 
     this.login();
     this.formLogin.reset();
   }
 
-  async login(){
+  async login() {
     this.isSubmitted = true;
 
     this._userService.execute(this.formLogin.value).subscribe({
@@ -53,7 +53,8 @@ export class Login {
     this._router.navigate(["/register"]);
   }
 
-  navigateToLogin() {
-    this._router.navigate(["/login"]);
+  navigateToHome() {
+    this._router.navigate(["/"]);
   }
+
 }

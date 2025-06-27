@@ -44,6 +44,10 @@ export class Navbar {
     this._router.navigate(["/login"]);
   }
 
+  navigateToHome() {
+    this._router.navigate(["/"]);
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.isLogged = false;

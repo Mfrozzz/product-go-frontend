@@ -13,16 +13,8 @@ export class Home {
     
   }
 
-  constructor(private _router: Router){
+  constructor(){
 
-  }
-
-  navigateToRegister() {
-    this._router.navigate(["/register"]);
-  }
-
-  navigateToLogin() {
-    this._router.navigate(["/login"]);
   }
 
 }

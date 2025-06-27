@@ -14,7 +14,6 @@ import { Product } from '../../models/product';
   styleUrl: './list-product.css'
 })
 export class ListProduct {
-  showDropdown = false;
   isAdmin = false;
   user?: User;
   products: Product[] = [];
@@ -39,7 +38,6 @@ export class ListProduct {
   listProducts(){
     this._listProductsService.execute().subscribe({
       next: (response) => {
-        console.log(response)
         this.products = response || [];
       },
       error: (err) => {

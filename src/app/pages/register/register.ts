@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {FormGroup, ReactiveFormsModule, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CreateUser } from '../../services/user/create-user';
 import { CommonModule } from '@angular/common';
 
@@ -15,22 +15,21 @@ export class Register {
   isSubmitted: boolean = false;
   errorMessage: string = "";
 
-  constructor(private _router: Router, private _formBuilder: FormBuilder, private _userService: CreateUser){
-    
+  constructor(private _router: Router, private _formBuilder: FormBuilder, private _userService: CreateUser) {
+
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.formRegister = this._formBuilder.group({
-      username: ["",[Validators.required, Validators.maxLength(50)]],
-      email: ["",[Validators.required, Validators.email]],
-      password: ["",[Validators.required, Validators.minLength(6)]]
+      username: ["", [Validators.required, Validators.maxLength(50)]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.formRegister.invalid) return;
-    
-    console.log(this.formRegister.value);
+
     this.register();
     this.formRegister.reset();
   }
@@ -39,16 +38,21 @@ export class Register {
     this._router.navigate(["/login"]);
   }
 
-  async register(){
+  navigateToHome() {
+    this._router.navigate(["/"]);
+  }
+
+
+  async register() {
     this.isSubmitted = true;
 
     try {
       this._userService.execute(this.formRegister.value);
 
       this._router.navigate(['/login']);
-    } catch(err: any) {
+    } catch (err: any) {
       this.errorMessage = err?.error?.message || 'Register failed.';
     }
   }
-  
+
 }

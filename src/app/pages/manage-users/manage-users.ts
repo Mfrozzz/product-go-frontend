@@ -10,10 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class ManageUsers {
   isSubmitted = false;
-  islogged = true;
   isAdmin = false;
-  showDropdown = false;
-  username = 'Admin';
 
   users = [
     { id: 1, name: 'João Silva', email: 'joao@email.com' },
@@ -57,7 +54,4 @@ export class ManageUsers {
     if (this.page < this.totalPages) this.page++;
   }
 
-  logout() {
-
-  }
 }

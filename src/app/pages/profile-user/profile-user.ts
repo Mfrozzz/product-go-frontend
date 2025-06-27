@@ -11,9 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class ProfileUser {
   profileForm!: FormGroup;
   isSubmitted = false;
-  islogged = true;
   isAdmin = false;
-  showDropdown = false;
   username = 'Test';
   activeTab: 'info' | 'edit' = 'info';
 
@@ -33,10 +31,6 @@ export class ProfileUser {
 
       console.log(this.profileForm.value);
     }
-  }
-
-  logout() {
-
   }
 
 }
