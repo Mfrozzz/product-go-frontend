@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
-import { GetUser } from '../../services/user/get-user';
 import { ListProducts } from '../../services/product/list-products';
 import { Product } from '../../models/product';
 
@@ -22,7 +21,7 @@ export class ListProduct {
   page = 1;
   perPage = 10;
 
-  constructor(private _router: Router, private _getUserService: GetUser, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef){ }
+  constructor(private _router: Router, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef){ }
 
   ngOnInit(){
     if (typeof window === 'undefined') {return}

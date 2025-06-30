@@ -35,7 +35,7 @@ export class CreateProduct {
   async createProduct(){
     this.isSubmitted = true;
     try{
-      await this._productService.execute(this.productForm.value);
+      this._productService.execute(this.productForm.value);
       this._router.navigate(["/products"]);
     } catch(err: any) {
       this.errorMessage = err?.error?.message || 'Create Product failed.';

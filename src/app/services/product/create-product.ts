@@ -14,6 +14,7 @@ export class CreateProductService {
 
   execute(productData: any){
     const url = `${this.PATH}/api/products`;
+    if (typeof window === 'undefined') {return}
     const product = this._http.post<HttpEvent<Product>>(url, productData,{
       reportProgress: true,
       observe: "events",
