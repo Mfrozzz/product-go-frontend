@@ -35,6 +35,7 @@ export class Navbar {
       this.user = user;
       this.isLogged = true;
       if (this.user.role === "admin") {
+        localStorage.setItem("isAdmin", "true");
         this.isAdmin = true;
       }
       this._cdr.detectChanges();
@@ -78,6 +79,7 @@ export class Navbar {
     this.isLogged = false;
     this.user = undefined;
     this.isAdmin = false;
+    localStorage.removeItem('isAdmin');
     this._router.navigate(['/login']);
   }
 }

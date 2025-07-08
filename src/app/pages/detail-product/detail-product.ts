@@ -28,6 +28,10 @@ export class DetailProduct {
   ngOnInit() {
     const param = this._actRoute.snapshot.paramMap.get("id");
     this.id_product = param ? Number(param) : null;
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin === "true") {
+      this.isAdmin = true;
+    }
     if (this.id_product !== null) {
       this._showProductService.execute(this.id_product).subscribe((product: Product) => {
         this.product = product;

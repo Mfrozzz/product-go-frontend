@@ -35,19 +35,19 @@ export class UpdateProduct {
     this.productForm.reset();
   }
 
-updateProduct() {
+  updateProduct() {
     this.isSubmitted = true;
     if (!this.product) return;
 
-    try{
-      this._updateProductService.execute( this.id_product, this.productForm.value);
+    try {
+      this._updateProductService.execute(this.id_product, this.productForm.value);
       this._router.navigate(["/products"]);
-    } catch(err: any) {
+    } catch (err: any) {
       this.errorMessage = err?.error?.message || 'Update Product failed.';
     }
-}
+  }
 
-  getProduct(){
+  getProduct() {
     this.id_product = Number(this._actRoute.snapshot.paramMap.get("id"));
     this._showProductService.execute(this.id_product).subscribe((product: Product) => {
       this.product = product;

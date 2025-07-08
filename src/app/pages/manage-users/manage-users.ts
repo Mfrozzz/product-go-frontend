@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-users',
@@ -11,6 +12,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class ManageUsers {
   isSubmitted = false;
   isAdmin = false;
+
+  constructor(private _router: Router){}
+
+  ngOnInit(){
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin === "true") {
+      this.isAdmin = true;
+    }else{
+      this.isAdmin = false;
+      alert("You do not have permission to access this page.");
+      this._router.navigate(['/products']);
+    }
+  }
 
   users = [
     { id: 1, name: 'João Silva', email: 'joao@email.com' },

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { User } from '../../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetUserById } from '../../services/user/get-user-by-id';
+import { UpdateUser } from '../../services/user/update-user';
 
 @Component({
   selector: 'app-profile-user',
@@ -18,8 +19,9 @@ export class ProfileUser {
   user: User | undefined = undefined;
   id_user: number | null = null;
   activeTab: 'info' | 'edit' = 'info';
+  errorMessage: string = "";
 
-  constructor(private _formBuilder: FormBuilder, private _router: Router, private _actRoute: ActivatedRoute, private _cdr: ChangeDetectorRef, private _getUserByIdService: GetUserById) { }
+  constructor(private _formBuilder: FormBuilder, private _router: Router, private _actRoute: ActivatedRoute, private _cdr: ChangeDetectorRef, private _getUserByIdService: GetUserById, private _updateUserService: UpdateUser) { }
 
   ngOnInit() {
     this.profileForm = this._formBuilder.group({
@@ -43,10 +45,19 @@ export class ProfileUser {
   }
 
   onSubmit() {
-    this.isSubmitted = true;
-    if (this.profileForm.valid) {
+    if (this.profileForm.valid || !this.user) return;
+    this.updateProfile();
+    this.profileForm.reset();
+  }
 
-      console.log(this.profileForm.value);
+  updateProfile(){
+    this.isSubmitted = true;
+
+    try {
+      this._updateUserService.execute(this.id_user, this.profileForm.value); // there is something wrong
+      this._router.navigate(["/products"]);
+    } catch (err: any) {
+      this.errorMessage = err?.error?.message || 'Update Product failed.';
     }
   }
 
