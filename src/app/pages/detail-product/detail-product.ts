@@ -15,33 +15,43 @@ import { DeleteProductService } from '../../services/product/delete-product';
 export class DetailProduct {
   isAdmin = false;
   product: Product | undefined = undefined;
-  id_product!: number;
+  id_product: number | null = null;
 
-  constructor(private _router: Router, private _actRoute: ActivatedRoute, private _showProductService: ShowProduct, private _cdr: ChangeDetectorRef, private _deleteProductService: DeleteProductService) { }
+  constructor(
+    private _router: Router,
+    private _actRoute: ActivatedRoute,
+    private _showProductService: ShowProduct,
+    private _cdr: ChangeDetectorRef,
+    private _deleteProductService: DeleteProductService
+  ) { }
 
   ngOnInit() {
-    this.id_product = Number(this._actRoute.snapshot.paramMap.get("id"));
-    this._showProductService.execute(this.id_product).subscribe((product: Product)=>{
-      this.product = product;
-      this._cdr.detectChanges();
-    });
+    const param = this._actRoute.snapshot.paramMap.get("id");
+    this.id_product = param ? Number(param) : null;
+    if (this.id_product !== null) {
+      this._showProductService.execute(this.id_product).subscribe((product: Product) => {
+        this.product = product;
+        this._cdr.detectChanges();
+      });
+    }
   }
 
-  goBack(){
+  goBack() {
     this._router.navigate(["/products"]);
   }
 
-  editProduct(){
-    this._router.navigate([`/products/update/${this.id_product}`]);
+  editProduct() {
+    if (this.id_product !== null) {
+      this._router.navigate([`/products/update/${this.id_product}`]);
+    }
   }
 
-  deleteProduct(){
-    if (!this.product || !this.product.id_product) {
+  deleteProduct() {
+    if (!this.product || this.id_product === null) {
       alert('Product not loaded or missing ID.');
       return;
     }
-
-    this._deleteProductService.execute(this.id_product).subscribe({ // To Correct: Object is possibly 'undefined'
+    this._deleteProductService.execute(this.id_product).subscribe({
       next: () => {
         this._router.navigate(["/products"]);
       },

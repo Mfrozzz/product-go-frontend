@@ -26,6 +26,11 @@ export class Navbar {
     if (typeof window === 'undefined') { return }
     const token = localStorage.getItem("token");
 
+    if (!token) {
+      this.isLogged = false;
+      return;
+    }
+
     this._getUserService.execute(token).subscribe((user: User) => {
       this.user = user;
       this.isLogged = true;
@@ -45,7 +50,27 @@ export class Navbar {
   }
 
   navigateToHome() {
-    this._router.navigate(["/"]);
+    if(!this.isLogged){
+      this._router.navigate(["/"]);
+    }else {
+      this._router.navigate(["/products"]);
+    }
+  }
+
+  navigateToProfile(){
+    if (!this.user) {
+      alert('User not loaded.');
+      return;
+    }
+    this._router.navigate([`/user/${this.user.id_user}/profile`]);
+  }
+
+  navigateToManageUsers(){
+    if (!this.isAdmin) {
+      alert('You do not have permission to manage users.');
+      return;
+    }
+    this._router.navigate(["/admin/users"]);
   }
 
   logout() {
