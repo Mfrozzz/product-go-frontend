@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../models/user';
+import { ListUsers } from '../../services/user/list-users';
 
 @Component({
   selector: 'app-manage-users',
@@ -12,8 +14,9 @@ import { Router } from '@angular/router';
 export class ManageUsers {
   isSubmitted = false;
   isAdmin = false;
+  listUsers: User[] = [];
 
-  constructor(private _router: Router){}
+  constructor(private _router: Router, private _cdr: ChangeDetectorRef, private _listUsersService: ListUsers){}
 
   ngOnInit(){
     const isAdmin = localStorage.getItem("isAdmin");
@@ -24,6 +27,21 @@ export class ManageUsers {
       alert("You do not have permission to access this page.");
       this._router.navigate(['/products']);
     }
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
+    this._listUsersService.execute().subscribe({
+      next: (response) => {
+        this.listUsers = response || [];
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      },
+      complete: () => {
+        this._cdr.detectChanges();
+      }
+    });
   }
 
   users = [
@@ -58,6 +76,19 @@ export class ManageUsers {
 
   onPerPageChange() {
     this.page = 1;
+  }
+
+  gotoDetails(id_user: number) {
+    this._router.navigate([`/users/${id_user}`]);
+  }
+
+  deleteUser(id_user: number) {
+    if (confirm("Are you sure you want to delete this user?")) {
+      // Call the delete user service here
+
+      alert(`User with ID ${id_user} deleted successfully.`);
+      this.getAllUsers();
+    }
   }
 
   prevPage() {
