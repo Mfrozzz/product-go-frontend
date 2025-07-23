@@ -50,7 +50,7 @@ export class ProfileUser {
     this.profileForm.reset();
   }
 
-  updateProfile(){
+  updateProfile(){ //debug
     this.isSubmitted = true;
 
     try {

@@ -44,20 +44,13 @@ export class ManageUsers {
     });
   }
 
-  users = [
-    { id: 1, name: 'João Silva', email: 'joao@email.com' },
-    { id: 2, name: 'Maria Souza', email: 'maria@email.com' },
-    { id: 3, name: 'Carlos Lima', email: 'carlos@email.com' },
-  ];
-
   search = '';
   page = 1;
   perPage = 10;
 
   get filteredUsers() {
-    return this.users.filter(u =>
-      u.name.toLowerCase().includes(this.search.toLowerCase()) ||
-      u.email.toLowerCase().includes(this.search.toLowerCase())
+    return this.listUsers.filter(u =>
+      u.username?.toLowerCase().includes(this.search.toLowerCase())
     );
   }
 
@@ -79,7 +72,7 @@ export class ManageUsers {
   }
 
   gotoDetails(id_user: number) {
-    this._router.navigate([`/users/${id_user}`]);
+    this._router.navigate([`admin/users/${id_user}`]);
   }
 
   deleteUser(id_user: number) {

@@ -13,7 +13,7 @@ export class ListUsers {
   constructor() { }
 
   execute(): Observable<any> {
-    const url = `${this.PATH}/api/users`;
+    const url = `${this.PATH}/api/admin/users`;
     return this._http.get(url, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`

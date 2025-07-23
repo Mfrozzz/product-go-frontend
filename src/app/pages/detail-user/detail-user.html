@@ -1,0 +1,85 @@
+<div class="min-h-screen flex flex-col">
+
+    <div class="flex-1 flex flex-col items-center justify-center min-h-[70vh] relative overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="w-full h-full bg-gradient-to-br from-blue-50 via-white to-blue-100"></div>
+            <div class="absolute top-10 left-10 w-72 h-72 bg-blue-200 opacity-30 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-blue-400 opacity-20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-32 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-100 opacity-40 rounded-full blur-2xl"></div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md flex flex-col gap-6">
+
+            <div class="flex border-b mb-6">
+                <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2 transition focus:outline-none"
+                    [ngClass]="activeTab === 'info' ? 'border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:text-blue-700'"
+                    (click)="activeTab = 'info'">
+                    User Information
+                </button>
+                <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2 transition focus:outline-none"
+                    [ngClass]="activeTab === 'edit' ? 'border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:text-blue-700'"
+                    (click)="activeTab = 'edit'">
+                    Update Information
+                </button>
+            </div>
+
+            <div *ngIf="activeTab === 'info'">
+                <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">User Details</h2>
+                <div>
+                    <label class="block text-gray-700 mb-1">User Name</label>
+                    <p class="text-lg text-gray-900 font-semibold">{{ user?.username }}</p>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Email</label>
+                    <p class="text-blue-600 font-bold text-lg">{{ user?.email }}</p>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Role</label>
+                    <p class="text-blue-600 font-bold text-lg">{{ user?.role }}</p>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition" (click)="goBack()">
+                        Back
+                    </button>
+                    <button *ngIf="isAdmin" class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteUser()">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            <form *ngIf="activeTab === 'edit'" [formGroup]="profileForm" (ngSubmit)="onSubmit()"
+                class="flex flex-col gap-6">
+                <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Update Profile</h2>
+                <div>
+                    <label class="block text-gray-700 mb-1" for="username">Username</label>
+                    <input id="username" formControlName="username" type="text" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <div *ngIf="isSubmitted && profileForm.controls['username'].invalid"
+                        class="text-red-500 text-xs mt-1">
+                        Username is required.
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1" for="email">Email</label>
+                    <input id="email" formControlName="email" type="email" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <div *ngIf="isSubmitted && profileForm.controls['email'].invalid"
+                        class="text-red-500 text-xs mt-1">
+                        Invalid Email.
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1" for="role">Role</label>
+                    <select name="role" id="role" formControlName="role"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>

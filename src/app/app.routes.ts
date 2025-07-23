@@ -10,6 +10,7 @@ import { PageNotFound } from './pages/page-not-found/page-not-found';
 import { ProfileUser } from './pages/profile-user/profile-user';
 import { ManageUsers } from './pages/manage-users/manage-users';
 import { MainLayout } from './shared/main-layout/main-layout';
+import { DetailUser } from './pages/detail-user/detail-user';
 
 export const routes: Routes = [
     { path: "register", component: Register, title: "Register" },
@@ -25,6 +26,7 @@ export const routes: Routes = [
             { path: "products/update/:id", component: UpdateProduct, title: "Update Products" },
             { path: "user/:id/profile", component: ProfileUser, title: "User Profile" },
             { path: "admin/users", component: ManageUsers, title: "Manage Users" },
+            { path: "admin/users/:id", component: DetailUser, title: "Detail User" },
             { path: "**", component: PageNotFound, title: "404" }
         ]
     }
