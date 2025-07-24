@@ -75,15 +75,6 @@ export class ManageUsers {
     this._router.navigate([`admin/users/${id_user}`]);
   }
 
-  deleteUser(id_user: number) {
-    if (confirm("Are you sure you want to delete this user?")) {
-      // Call the delete user service here
-
-      alert(`User with ID ${id_user} deleted successfully.`);
-      this.getAllUsers();
-    }
-  }
-
   prevPage() {
     if (this.page > 1) this.page--;
   }

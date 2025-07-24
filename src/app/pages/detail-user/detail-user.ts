@@ -37,22 +37,29 @@ export class DetailUser {
       role: ["", Validators.required]
     });
     this.getUser();
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin === "true") {
+      this.isAdmin = true;
+    }
   }
 
-  deleteUser() { //debug
+  deleteUser() {
     if (!this.user || this.id_user === null) {
       alert('User not loaded or missing ID.');
       return;
     }
-    this._deleteUserService.execute(this.id_user).subscribe({
-      next: () => {
-        this._router.navigate(["/users"]);
-      },
-      error: (err) => {
-        console.error('Error deleting user:', err);
-        alert('Failed to delete user.');
-      }
-    });
+    if (confirm("Are you sure you want to delete this user?")) {
+      this._deleteUserService.execute(this.id_user).subscribe({
+        next: () => {
+          this._router.navigate(["/admin/users"]);
+        },
+        error: (err) => {
+          console.error('Error deleting user:', err);
+          alert('Failed to delete user.');
+        }
+      });
+      alert(`User with ID ${this.id_user} deleted successfully.`);
+    }
   }
 
   editUser() { //debug
