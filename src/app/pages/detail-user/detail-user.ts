@@ -56,7 +56,6 @@ export class DetailUser {
           this._router.navigate(["/admin/users"]);
         },
         error: (err) => {
-          console.error('Error deleting user:', err);
           alert('Failed to delete user.');
         }
       });

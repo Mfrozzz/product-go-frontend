@@ -24,11 +24,11 @@ export class CreateProductService {
     }).subscribe({
         next: (event) => {
           if (event.type === HttpEventType.Response) {
-            console.log('Product created successfully:', event.body); // clean up later
+            alert('Product created successfully');
           }
         },
         error: (error) => {
-          console.error('Error creating product:', error);
+          alert('Error creating product');
         }
       });
       return product;

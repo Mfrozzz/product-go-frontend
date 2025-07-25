@@ -60,7 +60,6 @@ export class DetailProduct {
         this._router.navigate(["/products"]);
       },
       error: (err) => {
-        console.error('Error deleting product:', err);
         alert('Failed to delete product.');
       }
     });

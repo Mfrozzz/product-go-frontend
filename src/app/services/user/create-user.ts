@@ -21,11 +21,11 @@ export class CreateUser {
     }).subscribe({
       next: (event) => {
         if (event.type === HttpEventType.Response) {
-          console.log('User created successfully:', event.body);
+          alert('User created successfully');
         }
       },
       error: (error) => {
-        console.error('Error creating user:', error);
+        alert('Error creating user');
       }
     });
     return user;

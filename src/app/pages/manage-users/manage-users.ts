@@ -36,7 +36,7 @@ export class ManageUsers {
         this.listUsers = response || [];
       },
       error: (err) => {
-        console.error('Error fetching users:', err);
+        alert('Error fetching users');
       },
       complete: () => {
         this._cdr.detectChanges();

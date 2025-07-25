@@ -40,7 +40,7 @@ export class ListProduct {
         this.products = response || [];
       },
       error: (err) => {
-        console.error('Error fetching products:', err);
+        alert('Error fetching products');
       },
       complete: () => {
         this._cdr.detectChanges();
