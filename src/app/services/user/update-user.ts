@@ -16,7 +16,7 @@ export class UpdateUser {
     const url = `${this.PATH}/api/users/${id_user}`;
     const user = this._http.put<HttpEvent<User>>(url, userData, {
       reportProgress: true,
-      observe: "events",
+      observe: "response",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

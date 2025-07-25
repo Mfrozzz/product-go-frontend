@@ -45,16 +45,24 @@ export class ProfileUser {
   }
 
   onSubmit() {
-    if (this.profileForm.valid || !this.user) return;
+    if (this.profileForm.invalid || !this.user) return;
+
     this.updateProfile();
     this.profileForm.reset();
   }
 
-  updateProfile(){ //debug
+  updateProfile(){
     this.isSubmitted = true;
 
     try {
-      this._updateUserService.execute(this.id_user, this.profileForm.value); // there is something wrong
+      this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+        next: () => {
+          window.location.reload();
+        },
+        error: (err) => {
+          this.errorMessage = err?.error?.message || 'Update failed.';
+        }
+      });
       this._router.navigate(["/products"]);
     } catch (err: any) {
       this.errorMessage = err?.error?.message || 'Update Product failed.';

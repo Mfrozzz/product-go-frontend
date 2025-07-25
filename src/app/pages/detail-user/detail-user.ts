@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GetUserById } from '../../services/user/get-user-by-id';
 import { DeleteUser } from '../../services/user/delete-user';
+import { UpdateUser } from '../../services/user/update-user';
 
 @Component({
   selector: 'app-detail-user',
@@ -27,7 +28,8 @@ export class DetailUser {
     private _formBuilder: FormBuilder,
     private _showUserService: GetUserById,
     private _cdr: ChangeDetectorRef,
-    private _deleteUserService: DeleteUser
+    private _deleteUserService: DeleteUser,
+    private _updateUserService: UpdateUser
   ) { }
 
   ngOnInit(){
@@ -62,19 +64,11 @@ export class DetailUser {
     }
   }
 
-  editUser() { //debug
-    if(!this.profileForm.valid) {
-      this.isSubmitted = true;
-      this.errorMessage = "Please fill in all required fields.";
-      return;
-    }
-    this.onSubmit();
-  }
-
+  
   goBack() {
     this._router.navigate(["/admin/users"]);
   }
-
+  
   getUser(){
     this.id_user = Number(this._actRoute.snapshot.paramMap.get("id"));
     this._showUserService.execute(this.id_user).subscribe((user: User) => {
@@ -87,9 +81,30 @@ export class DetailUser {
       this._cdr.detectChanges();
     });
   }
-
+  
   onSubmit(){
-
+    if(!this.profileForm.valid) {
+      this.errorMessage = "Please fill in all required fields.";
+      return;
+    }
+    this.isSubmitted = true;
+    this.updateUser();
   }
-
+  
+  updateUser() {
+    try {
+      this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+        next: () => {
+          this._router.navigate(["/admin/users"]);
+        },
+        error: (err) => {
+          this.errorMessage = err?.error?.message || 'Update failed.';
+        }
+      });
+      this._router.navigate(["/admin/users"]);
+    } catch (err: any) {
+      this.errorMessage = err?.error?.message || 'Update Product failed.';
+    }
+  }
+  
 }
