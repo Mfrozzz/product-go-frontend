@@ -84,26 +84,24 @@ export class DetailUser {
   onSubmit(){
     if(!this.profileForm.valid) {
       this.errorMessage = "Please fill in all required fields.";
+      this.isSubmitted = true;
       return;
     }
-    this.isSubmitted = true;
+
     this.updateUser();
   }
   
   updateUser() {
-    try {
-      this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
-        next: () => {
-          this._router.navigate(["/admin/users"]);
-        },
-        error: (err) => {
-          this.errorMessage = err?.error?.message || 'Update failed.';
-        }
-      });
-      this._router.navigate(["/admin/users"]);
-    } catch (err: any) {
-      this.errorMessage = err?.error?.message || 'Update Product failed.';
-    }
+    this.isSubmitted = true;
+    this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+      next: () => {
+        this.profileForm.reset();
+        this._router.navigate(["/admin/users"]);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Update failed.';
+      }
+    });
   }
   
 }

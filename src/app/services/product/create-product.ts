@@ -21,16 +21,7 @@ export class CreateProductService {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
-    }).subscribe({
-        next: (event) => {
-          if (event.type === HttpEventType.Response) {
-            alert('Product created successfully');
-          }
-        },
-        error: (error) => {
-          alert('Error creating product');
-        }
-      });
+    });
       return product;
   }
 

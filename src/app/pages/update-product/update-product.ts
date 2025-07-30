@@ -37,14 +37,15 @@ export class UpdateProduct {
 
   updateProduct() {
     this.isSubmitted = true;
-    if (!this.product) return;
-
-    try {
-      this._updateProductService.execute(this.id_product, this.productForm.value);
-      this._router.navigate(["/products"]);
-    } catch (err: any) {
-      this.errorMessage = err?.error?.message || 'Update Product failed.';
-    }
+    this._updateProductService.execute(this.id_product, this.productForm.value)?.subscribe({
+      next: (res) => {
+        this.productForm.reset();
+        this._router.navigate(['/products']);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Update Product failed.';
+      }
+    });
   }
 
   getProduct() {

@@ -18,15 +18,6 @@ export class CreateUser {
     const user = this._http.post<HttpEvent<User>>(url, userData, {
       reportProgress: true,
       observe: 'events'
-    }).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.Response) {
-          alert('User created successfully');
-        }
-      },
-      error: (error) => {
-        alert('Error creating user');
-      }
     });
     return user;
   }

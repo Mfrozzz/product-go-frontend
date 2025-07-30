@@ -28,10 +28,12 @@ export class Login {
   }
 
   onSubmit() {
-    if (this.formLogin.invalid) return;
+    if (this.formLogin.invalid) {
+      this.isSubmitted = true;
+      return;
+    }
 
     this.login();
-    this.formLogin.reset();
   }
 
   async login() {
@@ -41,10 +43,11 @@ export class Login {
       next: (response) => {
         this.userToken = response.token;
         localStorage.setItem("token", this.userToken);
+        this.formLogin.reset();
         this._router.navigate(['/products']);
       },
       error: (err) => {
-        this.errorMessage = err?.error?.message || 'Register failed.';
+        this.errorMessage = err?.error?.message || 'Login failed.';
       }
     });
   }

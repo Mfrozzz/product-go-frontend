@@ -26,20 +26,25 @@ export class CreateProduct {
   }
 
   onSubmit() {
-    if (this.productForm.invalid) return;
+    if (this.productForm.invalid){
+      this.isSubmitted = true;
+      return;
+    }
 
     this.createProduct();
-    this.productForm.reset();
   }
 
   async createProduct(){
     this.isSubmitted = true;
-    try{
-      this._productService.execute(this.productForm.value);
-      this._router.navigate(["/products"]);
-    } catch(err: any) {
-      this.errorMessage = err?.error?.message || 'Create Product failed.';
-    }
+    this._productService.execute(this.productForm.value)?.subscribe({
+      next: (res) => {
+        this.productForm.reset();
+        this._router.navigate(['/products']);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Create Product failed.';
+      }
+    });
   }
 
 }

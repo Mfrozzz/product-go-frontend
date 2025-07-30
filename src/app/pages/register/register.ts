@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CreateUser } from '../../services/user/create-user';
 import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -28,10 +29,12 @@ export class Register {
   }
 
   onSubmit() {
-    if (this.formRegister.invalid) return;
+    if (this.formRegister.invalid) {
+      this.isSubmitted = true;
+      return;
+    }
 
     this.register();
-    this.formRegister.reset();
   }
 
   navigateToLogin() {
@@ -42,17 +45,18 @@ export class Register {
     this._router.navigate(["/"]);
   }
 
-
-  async register() {
+  register() {
     this.isSubmitted = true;
 
-    try {
-      this._userService.execute(this.formRegister.value);
-
-      this._router.navigate(['/login']);
-    } catch (err: any) {
-      this.errorMessage = err?.error?.message || 'Register failed.';
-    }
+    this._userService.execute(this.formRegister.value).subscribe({
+      next: (res) => {
+        this.formRegister.reset();
+        this._router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Register failed.';
+      }
+    });
   }
 
 }
