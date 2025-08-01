@@ -1,127 +1,127 @@
 # ProductGoFrontend
 
-Frontend for the Product Go API project. Built with Angular, it provides a user-friendly interface for product and user management, consuming the RESTful API developed in Go.
+Frontend para o projeto Product Go API. Construído com Angular, oferece uma interface amigável para gerenciamento de produtos e usuários, consumindo a API RESTful desenvolvida em Go.
 
 ---
 
-## Styling 🖌️
+## Estilização 🖌️
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for fast and modern styling.  
-You can customize or extend the styles as you wish.
+Este projeto utiliza [Tailwind CSS](https://tailwindcss.com/) para estilização rápida e moderna.  
+Você pode customizar ou estender os estilos como desejar.
 
 ---
 
 ## Table of Contents 📋
 
-- [Requirements](#requirements)
-- [Environment Setup](#environment-setup)
+- [Requisitos](#requirements)
+- [Configurações do Ambiente](#environment-setup)
 - [Scripts](#scripts)
-- [Features](#features)
-- [Endpoints Consumed](#endpoints-consumed)
-- [Folder Structure](#folder-structure)
+- [Funcionalidades](#features)
+- [Endpoints Consumidos](#endpoints-consumed)
+- [Estrutura de Pastas](#folder-structure)
 - [Screenshots](#screenshots)
-- [PT-BR Version](README-ptbr.md)
+- [Versão EN-US](README.md)
 
 ---
 
-## <span id="requirements">Requirements 📄</span>
+## <span id="requirements">Requisitos 📄</span>
 
 - Node.js 18+
 - npm 9+
 - Angular CLI 20+
-- The [Product Go API backend](https://github.com/Mfrozzz/product-go-api) running and accessible
+- O [Product Go API backend](https://github.com/Mfrozzz/product-go-api) executando e acessível
 
 ---
 
-## <span id="environment-setup">Environment Setup ⚙️</span>
+## <span id="environment-setup">Configurações do Ambiente ⚙️</span>
 
-1. **Clone the repository:**
+1. **Clone o repositório:**
 
    ```sh
    git clone https://github.com/Mfrozzz/product-go-frontend.git
    cd product-go-frontend
    ```
 
-2. **Install dependencies:**
+2. **Instale as dependências:**
 
    ```sh
    npm install
    ```
 
-3. **Configure environment variables:**
+3. **Configure as variáveis de ambiente:**
 
-   - Edit `src/environments/environment.development.ts` and set the correct `apiUrl` to point to your backend (default: `http://localhost:8000`).
+   - Edite o `src/environments/environment.development.ts` e coloque a `apiUrl` correta para apontar para o seu backend (padrão: `http://localhost:8000`).
 
-4. **Start the development server:**
+4. **Inicie o servidor de desenvolvimento:**
 
    ```sh
    ng serve -o
    ```
 
-   The app will be available at [http://localhost:4200](http://localhost:4200).
+   O app estará disponível em [http://localhost:4200](http://localhost:4200).
 
 ---
 
 ## <span id="scripts">Scripts ⌨️</span>
 
-- **Start development server:**
+- **Iniciar servidor de desenvolvimento:**
   ```sh
   ng serve
   ```
-- **Build for production:**
+- **Build para produção:**
   ```sh
   ng build
   ```
-- **Generate a new component:**
+- **Gerar um novo componente:**
   ```sh
   ng generate component component-name
   ```
-- **List all schematics:**
+- **Listar todas as schematics:**
   ```sh
   ng generate --help
   ```
 
 ---
 
-## <span id="features">Features ✨</span>
+## <span id="features">Funcionalidades ✨</span>
 
-- **Authentication:** Register, login, and JWT-based session management.
-- **Role-based access:** Admin and user roles, with admin-only features.
-- **Product management:** List, create, update, and delete products.
-- **User management:** View and update user profile, admin can manage users.
-- **Pagination and search:** For products and users.
-- **Responsive UI:** Built with Angular and modern CSS.
-- **Error handling:** Friendly messages for API and validation errors.
-
----
-
-## <span id="endpoints-consumed">Endpoints Consumed 📌</span>
-
-The frontend consumes the following endpoints from the Product Go API backend:
-
-### **Authentication & User**
-
-- `POST /register` — Register a new user
-- `POST /login` — Authenticate and receive JWT
-- `GET /api/user/info` — Get current authenticated user info
-- `GET /api/users/:id_user` — Get user by ID
-- `PUT /api/users/:id_user` — Update user info (self or admin)
-- `GET /api/admin/users` — List all users (admin only)
-- `DELETE /api/admin/users/:id_user` — Delete user (admin only)
-
-### **Products**
-
-- `GET /api/products` — List products (with pagination and search)
-- `GET /api/products/:id_product` — Get product details
-- `POST /api/products` — Create product (authenticated)
-- `PUT /api/products/:id_product` — Update product (authenticated)
-- `DELETE /api/admin/products/:id_product` — Delete product (admin only)
-
-> **Note:** All endpoints (except `/register` and `/login`) require the `Authorization: Bearer <jwt_token>` header.
+- **Autenticação**: Cadastro, login e gerenciamento de sessão baseado em JWT.
+- **Controle de acesso por função**: Perfis de administrador e usuário, com funcionalidades exclusivas para administradores.
+- **Gerenciamento de produtos**: Listar, criar, atualizar e excluir produtos.
+- **Gerenciamento de usuários**: Visualizar e atualizar o perfil do usuário; o administrador pode gerenciar todos os usuários.
+- **Paginação e busca**: Para produtos e usuários.
+- **Interface responsiva**: Desenvolvida com Angular e CSS moderno.
+- **Tratamento de erros**: Mensagens amigáveis para erros da API e de validação.
 
 ---
 
-## <span id="folder-structure">Folder Structure 📁</span>
+## <span id="endpoints-consumed">Endpoints Consumidos 📌</span>
+
+O frontend consome os seguintes endpoints da API backend Product Go:
+
+### **Autenticação & Usuário**
+
+- `POST /register` — Registrar novo usuário
+- `POST /login` — Autenticar e receber JWT
+- `GET /api/user/info` — Obter informações do usuário autenticado
+- `GET /api/users/:id_user` — Obter usuário por ID
+- `PUT /api/users/:id_user` — Atualizar informações do usuário (próprio ou por admin)
+- `GET /api/admin/users` — Listar todos os usuários (apenas admin)
+- `DELETE /api/admin/users/:id_user` — Excluir usuário (apenas admin)
+
+### **Produtos**
+
+- `GET /api/products` — Listar produtos (com paginação e busca)
+- `GET /api/products/:id_product` — Obter detalhes de um produto
+- `POST /api/products` — Criar produto (autenticado)
+- `PUT /api/products/:id_product` — Atualizar produto (autenticado)
+- `DELETE /api/admin/products/:id_product` — Excluir produto (apenas admin)
+
+> **Nota:** Todos os endpoints (exceto `/register` e `/login`) exigem o header `Authorization: Bearer <jwt_token>`.
+
+---
+
+## <span id="folder-structure">Estrutura de Pastas 📁</span>
 ```
 product-go-frontend/
 ├── .angular/
@@ -268,12 +268,12 @@ product-go-frontend/
 
 ---
 
-## Useful Links 🔗
+## Links Úteis 🔗
 
 - [Product Go API Backend](https://github.com/Mfrozzz/product-go-api)
-- [Angular CLI Documentation](https://angular.dev/tools/cli)
-- [Angular Documentation](https://angular.dev/overview)
+- [Angular CLI - Documentação](https://angular.dev/tools/cli)
+- [Angular - Documentação](https://angular.dev/overview)
 
 ---
 
-Developed by [Marcos Vinicius Boava](https://github.com/Mfrozzz).
+Desenvolvido por [Marcos Vinicius Boava](https://github.com/Mfrozzz).
