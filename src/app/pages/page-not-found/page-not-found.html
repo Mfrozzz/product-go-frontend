@@ -9,8 +9,11 @@
         </div>
         <h1 class="text-6xl font-extrabold mb-4 text-blue-700 drop-shadow-lg">404</h1>
         <p class="text-2xl text-gray-600 mb-2">Page not Found</p>
-        <a (click)="navigateToHome()" class="mt-4 px-6 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+        <a *ngIf="!isLogged" (click)="navigateToHome()" class="mt-4 px-6 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
             Back to Home
+        </a>
+        <a *ngIf="isLogged" (click)="navigateToListPage()" class="mt-4 px-6 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+            Back to List Page
         </a>
     </div>
 

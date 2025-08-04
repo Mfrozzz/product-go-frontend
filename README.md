@@ -128,6 +128,8 @@ product-go-frontend/
 ├── .vscode/
 ├── node_modules/
 ├── public/
+├── screenshots/
+|   └── System screenshots folder
 ├── src/
 |   ├── app/
 |   |   ├── models/
