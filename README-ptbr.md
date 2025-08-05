@@ -268,6 +268,41 @@ product-go-frontend/
 
 ## <span id="screenshots">Screenshots 📷</span>
 
+Abaixo estão algumas capturas de tela dos principais recursos e páginas do ProductGoFrontend:
+
+| Home Page                | Page Not Found (404)       |
+|--------------------------|----------------------------|
+| ![Home Page](screenshots/homepage.png) | ![Page Not Found](screenshots/404.png) |
+
+| Listagem de Produtos     | Detalhes do Produto (User) |
+|--------------------------|----------------------------|
+| ![List Products](screenshots/listProducts.png) | ![User Detail Product](screenshots/userDetailProduct.png) |
+
+| Criar Produto            | Atualizar Produto          |
+|--------------------------|----------------------------|
+| ![Create Product](screenshots/createProduct.png) | ![Update Product](screenshots/updateProduct.png) |
+
+| Admin - Detalhes do Usuário | Admin - Atualizar Usuário   |
+|----------------------------|------------------------------|
+| ![Admin Detail User](screenshots/adminDetailUser.png) | ![Admin Update User](screenshots/adminUpdateUser.png) |
+
+| Login                     | Cadastro                  |
+|---------------------------|---------------------------|
+| ![Login](screenshots/login.png) | ![Register](screenshots/register.png) |
+
+| Navbar do Usuário         | Admin Navbar              |
+|---------------------------|---------------------------|
+| ![User Navbar](screenshots/userNavbar.png) | ![Admin Navbar](screenshots/adminNavbar.png) |
+
+| Informações do Usuário    | Atualizar Perfil          |
+|---------------------------|---------------------------|
+| ![User Informations](screenshots/userInfo.png) | ![Update Profile](screenshots/updateProfile.png) |
+
+| Admin - Detalhes do Produto | Admin - Gerenciar Usuários |
+|---------------------------|---------------------------|
+| ![Admin Detail Product](screenshots/adminDetailProduct.png) | ![Admin ManageUsers](screenshots/adminManageUsers.png) |
+
+Todas as capturas de tela estão localizadas na pasta [`screenshots/`](screenshots).
 ---
 
 ## Links Úteis 🔗

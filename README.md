@@ -268,6 +268,42 @@ product-go-frontend/
 
 ## <span id="screenshots">Screenshots 📷</span>
 
+Below are some screenshots of the main features and pages of the ProductGoFrontend:
+
+| Home Page                | Page Not Found (404)       |
+|--------------------------|----------------------------|
+| ![Home Page](screenshots/homepage.png) | ![Page Not Found](screenshots/404.png) |
+
+| Product List             | Product Detail (User)      |
+|--------------------------|----------------------------|
+| ![List Products](screenshots/listProducts.png) | ![User Detail Product](screenshots/userDetailProduct.png) |
+
+| Create Product           | Update Product             |
+|--------------------------|----------------------------|
+| ![Create Product](screenshots/createProduct.png) | ![Update Product](screenshots/updateProduct.png) |
+
+| Admin - Detail User      | Admin - Update User        |
+|--------------------------|----------------------------|
+| ![Admin Detail User](screenshots/adminDetailUser.png) | ![Admin Update User](screenshots/adminUpdateUser.png) |
+
+| Login                     | Register                  |
+|---------------------------|---------------------------|
+| ![Login](screenshots/login.png) | ![Register](screenshots/register.png) |
+
+| User Navbar               | Admin Navbar              |
+|---------------------------|---------------------------|
+| ![User Navbar](screenshots/userNavbar.png) | ![Admin Navbar](screenshots/adminNavbar.png) |
+
+| User Informations         | Update Profile            |
+|---------------------------|---------------------------|
+| ![User Informations](screenshots/userInfo.png) | ![Update Profile](screenshots/updateProfile.png) |
+
+| Admin - Detail Product    | Admin - ManageUsers       |
+|---------------------------|---------------------------|
+| ![Admin Detail Product](screenshots/adminDetailProduct.png) | ![Admin ManageUsers](screenshots/adminManageUsers.png) |
+
+All screenshots are located in the [`screenshots/`](screenshots) folder.
+
 ---
 
 ## Useful Links 🔗
