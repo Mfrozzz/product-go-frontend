@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
@@ -16,12 +16,13 @@ export class ListProduct {
   isAdmin = false;
   user?: User;
   products: Product[] = [];
+  productsLoaded: boolean = false;
 
   search = '';
   page = 1;
   perPage = 10;
 
-  constructor(private _router: Router, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef){ }
+  constructor(private _router: Router, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef, private _zone: NgZone){ }
 
   ngOnInit(){
     if (typeof window === 'undefined') {return}
@@ -43,7 +44,10 @@ export class ListProduct {
         alert('Error fetching products');
       },
       complete: () => {
-        this._cdr.detectChanges();
+        this._zone.run(() => {
+          this.productsLoaded = true;
+          this._cdr.detectChanges();
+        });
       }
     });
   }

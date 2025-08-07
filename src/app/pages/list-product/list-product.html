@@ -25,29 +25,41 @@
             </div>
 
             <div class="overflow-x-auto">
-                <table *ngIf="products" class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
-                            <th class="px-6 py-3"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr *ngFor="let product of paginatedProducts">
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-900">{{ product?.name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right">
-                                <a (click)="goToDetails(product.id_product!)">
-                                    <button class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
-                                        Details
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr *ngIf="paginatedProducts.length === 0">
-                            <td colspan="2" class="px-6 py-4 text-center text-gray-400">Products not found.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @if (products) {
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th class="px-6 py-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @if(productsLoaded){
+                                @if(paginatedProducts.length > 0){
+                                    @for (product of paginatedProducts; track product.id_product) {
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-gray-900">{{ product?.name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button (click)="goToDetails(product.id_product!)" class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+                                                    Details
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                } @else {
+                                    <tr>
+                                        <td colspan="2" class="px-6 py-4 text-center text-gray-400">Products not found.</td>
+                                    </tr>
+                                }
+                            } @else {
+                                <tr>
+                                    <td colspan="2" class="px-6 py-4 text-center text-gray-400">Loading products...</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                }
             </div>
 
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4">
@@ -55,7 +67,9 @@
                     <label for="perPage" class="mr-2 text-gray-700">Results per page:</label>
                     <select id="perPage" [(ngModel)]="perPage" (change)="onPerPageChange()"
                         class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <option *ngFor="let size of [5, 10, 15, 20]" [value]="size">{{ size }}</option>
+                        @for (size of [5, 10, 15, 20]; track size) {
+                            <option [value]="size">{{ size }}</option>
+                        }
                     </select>
                 </div>
                 <div class="flex gap-2 items-center">

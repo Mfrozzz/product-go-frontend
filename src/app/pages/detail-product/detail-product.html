@@ -24,9 +24,11 @@
                 <button class="px-4 py-2 rounded bg-yellow-500 text-white hover:bg-yellow-600 transition" (click)="editProduct()">
                     Update
                 </button>
-                <button *ngIf="isAdmin" class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteProduct()">
-                    Delete
-                </button>
+                @if (isAdmin) {
+                    <button class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteProduct()">
+                        Delete
+                    </button>
+                }
             </div>
         </div>
     </div>

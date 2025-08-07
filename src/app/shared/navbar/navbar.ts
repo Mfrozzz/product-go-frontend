@@ -34,7 +34,7 @@ export class Navbar {
     this._getUserService.execute(token).subscribe((user: User) => {
       this.user = user;
       this.isLogged = true;
-      if (this.user.role === "admin") {
+      if (this.user.role === "admin" || this.user.role === "super_admin") {
         localStorage.setItem("isAdmin", "true");
         this.isAdmin = true;
       }

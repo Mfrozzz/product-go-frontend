@@ -22,63 +22,73 @@
                 </button>
             </div>
 
-            <div *ngIf="activeTab === 'info'">
-                <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">User Details</h2>
+            @if (activeTab === 'info') {
                 <div>
-                    <label class="block text-gray-700 mb-1">User Name</label>
-                    <p class="text-lg text-gray-900 font-semibold">{{ user?.username }}</p>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-1">Email</label>
-                    <p class="text-blue-600 font-bold text-lg">{{ user?.email }}</p>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-1">Role</label>
-                    <p class="text-blue-600 font-bold text-lg">{{ user?.role }}</p>
-                </div>
-                <div class="flex gap-2 mt-4">
-                    <button class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition" (click)="goBack()">
-                        Back
-                    </button>
-                    <button *ngIf="isAdmin" class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteUser()">
-                        Delete
-                    </button>
-                </div>
-            </div>
-            <form *ngIf="activeTab === 'edit'" [formGroup]="profileForm" (ngSubmit)="onSubmit()"
-                class="flex flex-col gap-6">
-                <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Update Profile</h2>
-                <div>
-                    <label class="block text-gray-700 mb-1" for="username">Username</label>
-                    <input id="username" formControlName="username" type="text" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    <div *ngIf="isSubmitted && profileForm.controls['username'].invalid"
-                        class="text-red-500 text-xs mt-1">
-                        Username is required.
+                    <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">User Details</h2>
+                    <div>
+                        <label class="block text-gray-700 mb-1">User Name</label>
+                        <p class="text-lg text-gray-900 font-semibold">{{ user?.username }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-1">Email</label>
+                        <p class="text-blue-600 font-bold text-lg">{{ user?.email }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-1">Role</label>
+                        <p class="text-blue-600 font-bold text-lg">{{ user?.role }}</p>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition" (click)="goBack()">
+                            Back
+                        </button>
+                        @if (isAdmin) {
+                            <button class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteUser()">
+                                Delete
+                            </button>
+                        }
                     </div>
                 </div>
-                <div>
-                    <label class="block text-gray-700 mb-1" for="email">Email</label>
-                    <input id="email" formControlName="email" type="email" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    <div *ngIf="isSubmitted && profileForm.controls['email'].invalid"
-                        class="text-red-500 text-xs mt-1">
-                        Invalid Email.
+            } @else {
+                <form [formGroup]="profileForm" (ngSubmit)="onSubmit()"
+                    class="flex flex-col gap-6">
+                    <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Update Profile</h2>
+                    <div>
+                        <label class="block text-gray-700 mb-1" for="username">Username</label>
+                        <input id="username" formControlName="username" type="text" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        @if (isSubmitted && profileForm.controls['username'].invalid) {
+                            <div class="text-red-500 text-xs mt-1">
+                                Username is required.
+                            </div>
+                        }
                     </div>
-                </div>
-                <div *ngIf="isAdmin">
-                    <label class="block text-gray-700 mb-1" for="role">Role</label>
-                    <select name="role" id="role" formControlName="role"
-                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                <button type="submit"
-                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-                    Update
-                </button>
-            </form>
+                    <div>
+                        <label class="block text-gray-700 mb-1" for="email">Email</label>
+                        <input id="email" formControlName="email" type="email" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        @if (isSubmitted && profileForm.controls['email'].invalid) {
+                            <div class="text-red-500 text-xs mt-1">
+                                Invalid Email.
+                            </div>
+                        }
+                    </div>
+                    @if (isAdmin) {
+                        <div>
+                            <label class="block text-gray-700 mb-1" for="role">Role</label>
+                            <select name="role" id="role" formControlName="role"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="super_admin">Super Admin</option>
+                            </select>
+                        </div>
+                    }
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                        Update
+                    </button>
+                </form>
+            }
         </div>
     </div>
 
