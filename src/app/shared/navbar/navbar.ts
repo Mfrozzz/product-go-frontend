@@ -33,9 +33,13 @@ export class Navbar {
 
     this._getUserService.execute(token).subscribe((user: User) => {
       this.user = user;
+      localStorage.setItem("id_user", user.id_user?.toString() || "");
       this.isLogged = true;
       if (this.user.role === "admin" || this.user.role === "super_admin") {
         localStorage.setItem("isAdmin", "true");
+        if(user.role === "super_admin"){
+          localStorage.setItem("isSuperAdmin", "true");
+        }
         this.isAdmin = true;
       }
       this._cdr.detectChanges();
@@ -77,9 +81,15 @@ export class Navbar {
   logout() {
     localStorage.removeItem('token');
     this.isLogged = false;
+    if(this.isAdmin){
+      this.isAdmin = false;
+      localStorage.removeItem('isAdmin');
+      if(localStorage.getItem('isSuperAdmin')){
+        localStorage.removeItem('isSuperAdmin');
+      }
+    }
     this.user = undefined;
-    this.isAdmin = false;
-    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('id_user');
     this._router.navigate(['/login']);
   }
 }

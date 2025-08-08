@@ -41,7 +41,7 @@
                         <button class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition" (click)="goBack()">
                             Back
                         </button>
-                        @if (isAdmin) {
+                        @if (canDeleteUser()) {
                             <button class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition" (click)="deleteUser()">
                                 Delete
                             </button>
@@ -72,7 +72,7 @@
                             </div>
                         }
                     </div>
-                    @if (isAdmin) {
+                    @if (canUpdateUser()) {
                         <div>
                             <label class="block text-gray-700 mb-1" for="role">Role</label>
                             <select name="role" id="role" formControlName="role"

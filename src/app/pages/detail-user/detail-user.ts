@@ -15,12 +15,14 @@ import { UpdateUser } from '../../services/user/update-user';
 })
 export class DetailUser {
   isAdmin = false;
+  isSuperAdmin = false;
   user: User | undefined = undefined;
   id_user: number | null = null;
   activeTab: 'info' | 'edit' = 'info';
   errorMessage: string = "";
   profileForm!: FormGroup;
   isSubmitted = false;
+  loggedUserId: number | null = null;
 
   constructor(
     private _router: Router,
@@ -42,6 +44,10 @@ export class DetailUser {
     const isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin === "true") {
       this.isAdmin = true;
+      const isSuperAdmin = localStorage.getItem("isSuperAdmin");
+      if (isSuperAdmin === "true") {
+        this.isSuperAdmin = true;
+      }
     }
   }
 
@@ -70,6 +76,7 @@ export class DetailUser {
   
   getUser(){
     this.id_user = Number(this._actRoute.snapshot.paramMap.get("id"));
+    this.loggedUserId = Number(localStorage.getItem("id_user"));
     this._showUserService.execute(this.id_user).subscribe((user: User) => {
       this.user = user;
       this.profileForm.patchValue({
@@ -103,5 +110,58 @@ export class DetailUser {
       }
     });
   }
+
+  canDeleteUser(): boolean {
+    if (!this.user || this.loggedUserId === null) return false;
+
+    const targetRole = this.user.role;
+    const targetId = this.user.id_user;
+
+    if (this.isSuperAdmin && this.loggedUserId === targetId && targetRole === 'super_admin') {
+      return false;
+    }
+
+    if (this.isSuperAdmin) {
+      return true;
+    }
+
+    if (this.isAdmin && targetRole === 'user') {
+      return true;
+    }
+
+    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'admin'){
+      return false;
+    }
+
+    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin'){
+      return false;
+    }
+
+    return false;
+  }
   
+  canUpdateUser(): boolean {
+    if (!this.user || this.loggedUserId === null) return false;
+
+    const targetRole = this.user.role;
+
+    if (this.isSuperAdmin) {
+      return true;
+    }
+
+    if (this.isAdmin && targetRole === 'user') {
+      return true;
+    }
+
+    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'admin'){
+      return false;
+    }
+
+    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin'){
+      return false;
+    }
+
+    return false;
+  }
+
 }
