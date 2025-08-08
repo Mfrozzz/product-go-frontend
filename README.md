@@ -86,12 +86,14 @@ You can customize or extend the styles as you wish.
 ## <span id="features">Features ✨</span>
 
 - **Authentication:** Register, login, and JWT-based session management.
-- **Role-based access:** Admin and user roles, with admin-only features.
+- **Role-based access:** Profiles include super_admin, admin, and user, each with exclusive functionalities. The super_admin has full access to the system, including administrator management.
 - **Product management:** List, create, update, and delete products.
 - **User management:** View and update user profile, admin can manage users.
 - **Pagination and search:** For products and users.
 - **Responsive UI:** Built with Angular and modern CSS.
 - **Error handling:** Friendly messages for API and validation errors.
+
+> **Note:** The super_admin role includes all admin permissions and can also promote/dismiss other admins and access advanced management features.
 
 ---
 
@@ -117,7 +119,7 @@ The frontend consumes the following endpoints from the Product Go API backend:
 - `PUT /api/products/:id_product` — Update product (authenticated)
 - `DELETE /api/admin/products/:id_product` — Delete product (admin only)
 
-> **Note:** All endpoints (except `/register` and `/login`) require the `Authorization: Bearer <jwt_token>` header.
+> **Note:** Some endpoints (such as administrator management) require the `super_admin` role. All endpoints (except `/register` and `/login`) require the `Authorization: Bearer <jwt_token>` header.
 
 ---
 

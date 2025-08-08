@@ -86,12 +86,14 @@ Você pode customizar ou estender os estilos como desejar.
 ## <span id="features">Funcionalidades ✨</span>
 
 - **Autenticação**: Cadastro, login e gerenciamento de sessão baseado em JWT.
-- **Controle de acesso por função**: Perfis de administrador e usuário, com funcionalidades exclusivas para administradores.
+- **Controle de acesso por função:** Perfis de super_admin, administrador e usuário, com funcionalidades exclusivas para cada papel. O super_admin possui acesso total ao sistema, incluindo a gestão de administradores.
 - **Gerenciamento de produtos**: Listar, criar, atualizar e excluir produtos.
 - **Gerenciamento de usuários**: Visualizar e atualizar o perfil do usuário; o administrador pode gerenciar todos os usuários.
 - **Paginação e busca**: Para produtos e usuários.
 - **Interface responsiva**: Desenvolvida com Angular e CSS moderno.
 - **Tratamento de erros**: Mensagens amigáveis para erros da API e de validação.
+
+> **Nota:** O papel super_admin possui todas as permissões de admin, podendo ainda promover/demitir outros admins e acessar recursos exclusivos de gerenciamento avançado.
 
 ---
 
@@ -117,7 +119,7 @@ O frontend consome os seguintes endpoints da API backend Product Go:
 - `PUT /api/products/:id_product` — Atualizar produto (autenticado)
 - `DELETE /api/admin/products/:id_product` — Excluir produto (apenas admin)
 
-> **Nota:** Todos os endpoints (exceto `/register` e `/login`) exigem o header `Authorization: Bearer <jwt_token>`.
+> **Nota:** Alguns endpoints (como gerenciamento de administradores) exigem o papel super_admin. Todos os endpoints (exceto `/register` e `/login`) exigem o header `Authorization: Bearer <jwt_token>`.
 
 ---
 
