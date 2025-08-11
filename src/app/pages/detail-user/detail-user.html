@@ -15,11 +15,13 @@
                     (click)="activeTab = 'info'">
                     User Information
                 </button>
-                <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2 transition focus:outline-none"
-                    [ngClass]="activeTab === 'edit' ? 'border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:text-blue-700'"
-                    (click)="activeTab = 'edit'">
-                    Update Information
-                </button>
+                @if (canUpdateUser()) {
+                    <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2 transition focus:outline-none"
+                        [ngClass]="activeTab === 'edit' ? 'border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:text-blue-700'"
+                        (click)="activeTab = 'edit'">
+                        Update Information
+                    </button>
+                }
             </div>
 
             @if (activeTab === 'info') {
@@ -79,7 +81,9 @@
                                 class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
-                                <option value="super_admin">Super Admin</option>
+                                @if (isSuperAdmin){
+                                    <option value="super_admin">Super Admin</option>
+                                }
                             </select>
                         </div>
                     }
