@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/user/login';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -42,12 +43,45 @@ export class Login {
     this._userService.execute(this.formLogin.value).subscribe({
       next: (response) => {
         this.userToken = response.token;
-        localStorage.setItem("token", this.userToken);
-        this.formLogin.reset();
-        this._router.navigate(['/products']);
+        if(this.userToken){
+          localStorage.setItem("token", this.userToken);
+          Swal.fire({
+            title: 'Login Successful',
+            text: 'Welcome back!',
+            icon: 'success',
+            customClass: {
+              confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+            },
+            buttonsStyling: false,
+            confirmButtonText: 'OK'
+          }).then(()=>{
+            this.formLogin.reset();
+            this._router.navigate(['/products']);
+          });
+        } else {
+          Swal.fire({
+            title: 'Login Failed',
+            text: 'User not found or invalid credentials.',
+            icon: 'error',
+            customClass: {
+              confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+            },
+            buttonsStyling: false,
+            confirmButtonText: 'OK'
+          });
+        }
       },
       error: (err) => {
-        this.errorMessage = err?.error?.message || 'Login failed.';
+        Swal.fire({
+          title: 'Login Failed',
+          text: err?.error?.message || 'Invalid credentials.',
+          icon: 'error',
+          customClass: {
+            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          buttonsStyling: false,
+          confirmButtonText: 'OK'
+        });
       }
     });
   }

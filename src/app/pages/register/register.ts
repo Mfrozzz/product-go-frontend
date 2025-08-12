@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CreateUser } from '../../services/user/create-user';
 import { CommonModule } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -50,11 +50,31 @@ export class Register {
 
     this._userService.execute(this.formRegister.value).subscribe({
       next: (res) => {
-        this.formRegister.reset();
-        this._router.navigate(['/login']);
+        Swal.fire({
+          title: 'Registration Successful',
+          text: 'You can now log in.',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          buttonsStyling: false,
+          confirmButtonText: 'OK'
+        }).then(() => {
+          this.formRegister.reset();
+          this.navigateToLogin();
+        });
       },
       error: (err) => {
-        this.errorMessage = err?.error?.message || 'Register failed.';
+        Swal.fire({
+          title: 'Registration Failed',
+          text: err?.error?.message || 'An error occurred during registration.',
+          icon: 'error',
+          customClass: {
+            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          buttonsStyling: false,
+          confirmButtonText: 'OK'
+        });
       }
     });
   }

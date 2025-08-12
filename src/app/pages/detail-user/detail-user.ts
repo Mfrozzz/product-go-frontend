@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { GetUserById } from '../../services/user/get-user-by-id';
 import { DeleteUser } from '../../services/user/delete-user';
 import { UpdateUser } from '../../services/user/update-user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail-user',
@@ -53,21 +54,62 @@ export class DetailUser {
 
   deleteUser() {
     if (!this.user || this.id_user === null) {
-      alert('User not loaded or missing ID.');
+      Swal.fire({
+        title: 'Error',
+        text: 'User not loaded or missing ID.',
+        icon: 'error',
+        customClass: {
+          confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+        },
+        buttonsStyling: false
+      });
       return;
     }
-    if (confirm("Are you sure you want to delete this user?")) {
-      this._deleteUserService.execute(this.id_user).subscribe({
-        next: () => {
-          this._router.navigate(["/admin/users"]);
-        },
-        error: (err) => {
-          alert('Failed to delete user.');
-        }
-      });
-      alert(`User with ID ${this.id_user} deleted successfully.`);
-    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `This will permanently delete the user with ID ${this.id_user}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        confirmButton: 'bg-red-500 hover:bg-red-600 text-white m-2 font-semibold py-2 px-4 rounded',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-gray-800 m-2 font-semibold py-2 px-4 rounded'
+      },
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._deleteUserService.execute(this.id_user!).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: `User with ID ${this.id_user} deleted successfully.`,
+              icon: 'success',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            }).then(() => {
+              this._router.navigate(["/admin/users"]);
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Failed',
+              text: err?.error?.message || 'Failed to delete user.',
+              icon: 'error',
+              customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            });
+          }
+        });
+      }
+    });
   }
+
 
   
   goBack() {
@@ -100,13 +142,47 @@ export class DetailUser {
   
   updateUser() {
     this.isSubmitted = true;
-    this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
-      next: () => {
-        this.profileForm.reset();
-        this._router.navigate(["/admin/users"]);
+    Swal.fire({
+      title: 'Confirm your Update action.',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      customClass: {
+        confirmButton: 'bg-yellow-500 hover:bg-yellow-600 text-white m-2 font-semibold py-2 px-4 rounded',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
       },
-      error: (err) => {
-        this.errorMessage = err?.error?.message || 'Update failed.';
+      buttonsStyling: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Success',
+              text: 'User updated successfully.',
+              icon: 'success',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            }).then(()=>{
+              this.profileForm.reset();
+              this._router.navigate(["/admin/users"]);
+            });
+          },
+          error: (err) => {
+            this.errorMessage = err?.error?.message || 'Update failed.';
+            Swal.fire({
+              title: 'Error',
+              text: this.errorMessage,
+              icon: 'error',
+              customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            });
+          }
+        });
       }
     });
   }

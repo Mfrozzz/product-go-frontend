@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ShowProduct } from '../../services/product/show-product';
 import { Product } from '../../models/product';
 import { DeleteProductService } from '../../services/product/delete-product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail-product',
@@ -52,15 +53,59 @@ export class DetailProduct {
 
   deleteProduct() {
     if (!this.product || this.id_product === null) {
-      alert('Product not loaded or missing ID.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Product not loaded or missing ID.',
+        customClass: {
+          confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+        },
+        buttonsStyling: false,
+        confirmButtonText: 'OK'
+      });
       return;
     }
-    this._deleteProductService.execute(this.id_product).subscribe({
-      next: () => {
-        this._router.navigate(["/products"]);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'bg-red-500 hover:bg-red-600 text-white m-2 font-semibold py-2 px-4 rounded',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
       },
-      error: (err) => {
-        alert('Failed to delete product.');
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._deleteProductService.execute(this.id_product!).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Product Deleted',
+              text: 'The product has been successfully deleted.',
+              icon: 'success',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false,
+              confirmButtonText: 'OK'
+            });
+            this._router.navigate(["/products"]);
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error Deleting Product',
+              text: err?.error?.message || 'Failed to delete product.',
+              icon: 'error',
+              customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false,
+              confirmButtonText: 'OK'
+            });
+          }
+        });
       }
     });
   }

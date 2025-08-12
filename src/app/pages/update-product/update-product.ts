@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/product';
 import { ShowProduct } from '../../services/product/show-product';
 import { UpdateProductService } from '../../services/product/update-product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-update-product',
@@ -37,13 +38,48 @@ export class UpdateProduct {
 
   updateProduct() {
     this.isSubmitted = true;
-    this._updateProductService.execute(this.id_product, this.productForm.value)?.subscribe({
-      next: (res) => {
-        this.productForm.reset();
-        this._router.navigate(['/products']);
+    Swal.fire({
+      title: 'Update Product',
+      text: 'Are you sure you want to update this product?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        confirmButton: 'bg-yellow-500 hover:bg-yellow-600 text-white m-2 font-semibold py-2 px-4 rounded',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
       },
-      error: (err) => {
-        this.errorMessage = err?.error?.message || 'Update Product failed.';
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._updateProductService.execute(this.id_product, this.productForm.value)?.subscribe({ //something went wrong here
+          next: (res) => {
+            Swal.fire({
+              title: 'Success',
+              text: 'Product updated successfully.',
+              icon: 'success',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            }).then(()=>{
+              this.productForm.reset();
+              this._router.navigate(['/products']);
+            });
+          },
+          error: (err) => {
+            this.errorMessage = err?.error?.message || 'Update Product failed.';
+            Swal.fire({
+              title: 'Error',
+              text: this.errorMessage,
+              icon: 'error',
+              customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            });
+          }
+        });
       }
     });
   }

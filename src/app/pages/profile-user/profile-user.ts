@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetUserById } from '../../services/user/get-user-by-id';
 import { UpdateUser } from '../../services/user/update-user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile-user',
@@ -55,15 +56,49 @@ export class ProfileUser {
 
   updateProfile(){
     this.isSubmitted = true;
-    this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
-      next: () => {
-        this.profileForm.reset();
-        window.location.reload();
+    Swal.fire({
+      title: 'Update User',
+      text: 'Are you sure you want to update this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        confirmButton: 'bg-yellow-500 hover:bg-yellow-600 text-white m-2 font-semibold py-2 px-4 rounded',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
       },
-      error: (err) => {
-        this.errorMessage = err?.error?.message || 'Update failed.';
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Success',
+              text: 'User updated successfully.',
+              icon: 'success',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            }).then(()=>{
+              this.profileForm.reset();
+              window.location.reload();
+            });
+          },
+          error: (err) => {
+            this.errorMessage = err?.error?.message || 'Update failed.';
+            Swal.fire({
+              title: 'Error',
+              text: this.errorMessage,
+              icon: 'error',
+              customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+              },
+              buttonsStyling: false
+            });
+          }
+        });
       }
     });
   }
-
 }

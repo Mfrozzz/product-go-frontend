@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateProductService } from '../../services/product/create-product';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-product',
@@ -38,11 +39,31 @@ export class CreateProduct {
     this.isSubmitted = true;
     this._productService.execute(this.productForm.value)?.subscribe({
       next: (res) => {
-        this.productForm.reset();
-        this._router.navigate(['/products']);
+        Swal.fire({
+          title: 'Product Created Successfully',
+          text: 'Your product has been created.',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          buttonsStyling: false,
+          confirmButtonText: 'OK'
+        }).then(()=>{
+          this.productForm.reset();
+          this._router.navigate(['/products']);
+        });
       },
       error: (err) => {
-        this.errorMessage = err?.error?.message || 'Create Product failed.';
+        Swal.fire({
+          title: 'Product Creation Failed',
+          text: err?.error?.message || 'Create Product failed. Please try again.',
+          icon: 'error',
+          customClass: {
+            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          buttonsStyling: false,
+          confirmButtonText: 'OK'
+        });
       }
     });
   }

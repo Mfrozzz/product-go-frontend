@@ -260,6 +260,7 @@ product-go-frontend/
 ├── angular.json
 ├── package-lock.json
 ├── package.json
+├── README-ptbr.md
 ├── README.md
 ├── tsconfig.app.json
 ├── tsconfig.json
