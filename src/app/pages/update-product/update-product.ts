@@ -38,6 +38,7 @@ export class UpdateProduct {
 
   updateProduct() {
     this.isSubmitted = true;
+    const payload = this.productForm.value;
     Swal.fire({
       title: 'Update Product',
       text: 'Are you sure you want to update this product?',
@@ -52,7 +53,7 @@ export class UpdateProduct {
       buttonsStyling: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this._updateProductService.execute(this.id_product, this.productForm.value)?.subscribe({ //something went wrong here
+        this._updateProductService.execute(this.id_product, payload)?.subscribe({
           next: (res) => {
             Swal.fire({
               title: 'Success',

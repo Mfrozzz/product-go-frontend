@@ -37,7 +37,7 @@ export class DetailUser {
 
   ngOnInit(){
     this.profileForm = this._formBuilder.group({
-      username: ["", Validators.required],
+      username: ["", Validators.required, Validators.maxLength(50)],
       email: ["", [Validators.required, Validators.email]],
       role: ["", Validators.required]
     });
