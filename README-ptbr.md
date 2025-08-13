@@ -305,6 +305,14 @@ Abaixo estão algumas capturas de tela dos principais recursos e páginas do Pro
 |---------------------------|---------------------------|
 | ![Admin Detail Product](screenshots/adminDetailProduct.png) | ![Admin ManageUsers](screenshots/adminManageUsers.png) |
 
+| Admin - Detalhes do Usuário - Restrito | Alert de Sucesso |
+|---------------------------|---------------------------|
+| ![Admin Detail User Restricted](screenshots/restrictedAdminDetailUser.png) | ![Success Alert](screenshots/successAlert.png) |
+
+| Alert de Cofirmação       | Alert de erro             |
+|---------------------------|---------------------------|
+| ![Confirmation Alert](screenshots/confirmationAlert.png) | ![Error Alert](screenshots/errorAlert.png) |
+
 Todas as capturas de tela estão localizadas na pasta [`screenshots/`](screenshots).
 ---
 

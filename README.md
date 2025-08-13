@@ -305,6 +305,14 @@ Below are some screenshots of the main features and pages of the ProductGoFronte
 |---------------------------|---------------------------|
 | ![Admin Detail Product](screenshots/adminDetailProduct.png) | ![Admin ManageUsers](screenshots/adminManageUsers.png) |
 
+| Admin - Detail User - Restricted | Success Alert      |
+|---------------------------|---------------------------|
+| ![Admin Detail User Restricted](screenshots/restrictedAdminDetailUser.png) | ![Success Alert](screenshots/successAlert.png) |
+
+| Confirmation Alert        | Error Alert               |
+|---------------------------|---------------------------|
+| ![Confirmation Alert](screenshots/confirmationAlert.png) | ![Error Alert](screenshots/errorAlert.png) |
+
 All screenshots are located in the [`screenshots/`](screenshots) folder.
 
 ---

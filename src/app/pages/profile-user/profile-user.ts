@@ -26,7 +26,7 @@ export class ProfileUser {
 
   ngOnInit() {
     this.profileForm = this._formBuilder.group({
-      username: ["", Validators.required, Validators.maxLength(50)],
+      username: ["", [Validators.required, Validators.maxLength(50)]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.minLength(6)]]
     });
