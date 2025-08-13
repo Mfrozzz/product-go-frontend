@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { ListProducts } from '../../services/product/list-products';
 import { Product } from '../../models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-product',
@@ -41,7 +42,16 @@ export class ListProduct {
         this.products = response || [];
       },
       error: (err) => {
-        alert('Error fetching products');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch products. Please try again later.',
+          customClass: {
+            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          confirmButtonText: 'OK',
+          buttonsStyling: false,
+        });
       },
       complete: () => {
         this._zone.run(() => {

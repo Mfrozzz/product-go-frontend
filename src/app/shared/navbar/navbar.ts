@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { CommonModule } from '@angular/common';
 import { GetUser } from '../../services/user/get-user';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -64,7 +65,16 @@ export class Navbar {
 
   navigateToProfile(){
     if (!this.user) {
-      alert('User not loaded.');
+      Swal.fire({
+        icon: 'error',
+        title: 'User Not Loaded',
+        text: 'Please log in to access your profile.',
+        customClass: {
+          confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+        },
+        confirmButtonText: 'OK',
+        buttonsStyling: false,
+      });
       return;
     }
     this._router.navigate([`/user/${this.user.id_user}/profile`]);
@@ -72,7 +82,16 @@ export class Navbar {
 
   navigateToManageUsers(){
     if (!this.isAdmin) {
-      alert('You do not have permission to manage users.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'You do not have permission to manage users.',
+        customClass: {
+          confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+        },
+        confirmButtonText: 'OK',
+        buttonsStyling: false,
+      });
       return;
     }
     this._router.navigate(["/admin/users"]);

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { ListUsers } from '../../services/user/list-users';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-manage-users',
@@ -26,8 +27,18 @@ export class ManageUsers {
       this.isAdmin = true;
     }else{
       this.isAdmin = false;
-      alert("You do not have permission to access this page.");
-      this._router.navigate(['/products']);
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'You do not have permission to access this page.',
+        customClass: {
+          confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+        },
+        confirmButtonText: 'OK',
+        buttonsStyling: false,
+      }).then(()=>{
+        this._router.navigate(['/products']);
+      });
     }
     this.getAllUsers();
   }
@@ -39,7 +50,16 @@ export class ManageUsers {
         this.hasUsers = this.paginatedUsers.length > 0;
       },
       error: (err) => {
-        alert('Error fetching users');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch users. Please try again later.',
+          customClass: {
+            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+          },
+          confirmButtonText: 'OK',
+          buttonsStyling: false,
+        });
       },
       complete: () => {
         this._zone.run(() => {
