@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { User } from '../../models/user';
+import { User } from '../../../models/user';
 import { CommonModule } from '@angular/common';
-import { GetUser } from '../../services/user/get-user';
+import { GetUser } from '../../../services/user/get-user';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
