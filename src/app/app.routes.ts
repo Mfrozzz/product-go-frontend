@@ -11,15 +11,17 @@ import { ProfileUser } from './pages/profile-user/profile-user';
 import { ManageUsers } from './pages/manage-users/manage-users';
 import { MainLayout } from './shared/layouts/main-layout/main-layout';
 import { DetailUser } from './pages/detail-user/detail-user';
+import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
+    { path: "", component: Home, title: "Product Go Project" },
     { path: "register", component: Register, title: "Register" },
     { path: "login", component: Login, title: "Login" },
     {
-        path: "",
+        path: "p",
         component: MainLayout,
+        canActivate: [authGuard],
         children: [
-            { path: "", component: Home, title: "Product Go Project" },
             { path: "products", component: ListProduct, title: "List Products" },
             { path: "products/create", component: CreateProduct, title: "Create Products" },
             { path: "products/:id", component: DetailProduct, title: "Detail Product" },
@@ -27,7 +29,8 @@ export const routes: Routes = [
             { path: "user/:id/profile", component: ProfileUser, title: "User Profile" },
             { path: "admin/users", component: ManageUsers, title: "Manage Users" },
             { path: "admin/users/:id", component: DetailUser, title: "Detail User" },
-            { path: "**", component: PageNotFound, title: "404" }
         ]
-    }
+    },
+    { path: "**", component: PageNotFound, title: "404" }
+
 ];

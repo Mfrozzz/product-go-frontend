@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Footer } from '../../shared/layouts/footer/footer';
+import { Navbar } from '../../shared/layouts/navbar/navbar';
 
 @Component({
   selector: 'app-page-not-found',
-  imports: [CommonModule],
+  imports: [CommonModule, Navbar, Footer],
   templateUrl: './page-not-found.html',
   styleUrl: './page-not-found.css'
 })
@@ -33,7 +35,7 @@ export class PageNotFound {
   }
 
   navigateToListPage() {
-    this._router.navigate(["/products"]);
+    this._router.navigate(["/p/products"]);
   }
 
 }

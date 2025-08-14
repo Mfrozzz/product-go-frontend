@@ -56,7 +56,7 @@ export class Login {
             confirmButtonText: 'OK'
           }).then(()=>{
             this.formLogin.reset();
-            this._router.navigate(['/products']);
+            this._router.navigate(['/p/products']);
           });
         } else {
           Swal.fire({

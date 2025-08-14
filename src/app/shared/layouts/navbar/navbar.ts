@@ -59,7 +59,7 @@ export class Navbar {
     if(!this.isLogged){
       this._router.navigate(["/"]);
     }else {
-      this._router.navigate(["/products"]);
+      this._router.navigate(["/p/products"]);
     }
   }
 
@@ -77,7 +77,7 @@ export class Navbar {
       });
       return;
     }
-    this._router.navigate([`/user/${this.user.id_user}/profile`]);
+    this._router.navigate([`/p/user/${this.user.id_user}/profile`]);
   }
 
   navigateToManageUsers(){
@@ -94,7 +94,7 @@ export class Navbar {
       });
       return;
     }
-    this._router.navigate(["/admin/users"]);
+    this._router.navigate(["/p/admin/users"]);
   }
 
   logout() {

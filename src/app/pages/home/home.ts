@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { Navbar } from '../../shared/layouts/navbar/navbar';
+import { Footer } from '../../shared/layouts/footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Navbar, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

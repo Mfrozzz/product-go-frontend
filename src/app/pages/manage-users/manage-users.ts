@@ -37,7 +37,7 @@ export class ManageUsers {
         confirmButtonText: 'OK',
         buttonsStyling: false,
       }).then(()=>{
-        this._router.navigate(['/products']);
+        this._router.navigate(['/p/products']);
       });
     }
     this.getAllUsers();
@@ -99,7 +99,7 @@ export class ManageUsers {
   }
 
   gotoDetails(id_user: number) {
-    this._router.navigate([`admin/users/${id_user}`]);
+    this._router.navigate([`/p/admin/users/${id_user}`]);
   }
 
   prevPage() {

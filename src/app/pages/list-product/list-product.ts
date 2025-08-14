@@ -27,11 +27,6 @@ export class ListProduct {
 
   ngOnInit(){
     if (typeof window === 'undefined') {return}
-    const token = localStorage.getItem("token");
-    if(!token){
-      this._router.navigate(["/login"]);
-      return;
-    }
 
     this.listProducts();
   }
@@ -78,11 +73,11 @@ export class ListProduct {
   }
 
   goToDetails(id_product: number){
-    this._router.navigate([`/products/${id_product}`]);
+    this._router.navigate([`/p/products/${id_product}`]);
   }
 
   goToCreateProduct(){
-    this._router.navigate(["products/create"]);
+    this._router.navigate(["/p/products/create"]);
   }
 
   onSearchChange() {

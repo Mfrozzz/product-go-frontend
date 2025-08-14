@@ -70,7 +70,7 @@ export class UpdateProduct {
               buttonsStyling: false
             }).then(()=>{
               this.productForm.reset();
-              this._router.navigate(['/products']);
+              this._router.navigate(['/p/products']);
             });
           },
           error: (err) => {

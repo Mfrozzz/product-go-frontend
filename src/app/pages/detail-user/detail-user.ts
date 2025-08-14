@@ -92,7 +92,7 @@ export class DetailUser {
               },
               buttonsStyling: false
             }).then(() => {
-              this._router.navigate(["/admin/users"]);
+              this._router.navigate(["/p/admin/users"]);
             });
           },
           error: (err) => {
@@ -114,7 +114,7 @@ export class DetailUser {
 
   
   goBack() {
-    this._router.navigate(["/admin/users"]);
+    this._router.navigate(["/p/admin/users"]);
   }
   
   getUser(){
@@ -174,7 +174,7 @@ export class DetailUser {
               buttonsStyling: false
             }).then(()=>{
               this.profileForm.reset();
-              this._router.navigate(["/admin/users"]);
+              this._router.navigate(["/p/admin/users"]);
             });
           },
           error: (err) => {
