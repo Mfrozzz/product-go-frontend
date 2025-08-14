@@ -4,6 +4,7 @@ import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angula
 import { CreateUser } from '../../services/user/create-user';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
   selector: 'app-register',
@@ -48,7 +49,13 @@ export class Register {
   register() {
     this.isSubmitted = true;
 
-    this._userService.execute(this.formRegister.value).subscribe({
+    const sanitizedUser = {
+      username: sanitizeInput(this.formRegister.value.username),
+      email: this.formRegister.value.email,
+      password: this.formRegister.value.password
+    };
+
+    this._userService.execute(sanitizedUser).subscribe({
       next: (res) => {
         Swal.fire({
           title: 'Registration Successful',

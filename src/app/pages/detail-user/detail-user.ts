@@ -7,6 +7,7 @@ import { GetUserById } from '../../services/user/get-user-by-id';
 import { DeleteUser } from '../../services/user/delete-user';
 import { UpdateUser } from '../../services/user/update-user';
 import Swal from 'sweetalert2';
+import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
   selector: 'app-detail-user',
@@ -142,6 +143,7 @@ export class DetailUser {
   
   updateUser() {
     this.isSubmitted = true;
+
     Swal.fire({
       title: 'Confirm your Update action.',
       text: "This action cannot be undone.",
@@ -155,7 +157,12 @@ export class DetailUser {
       buttonsStyling: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+        const sanitizedUserUpdate = {
+          username: sanitizeInput(this.profileForm.value.username),
+          email: this.profileForm.value.email,
+          role: this.profileForm.value.role
+        }
+        this._updateUserService.execute(this.id_user, sanitizedUserUpdate).subscribe({
           next: () => {
             Swal.fire({
               title: 'Success',

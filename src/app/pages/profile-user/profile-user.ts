@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GetUserById } from '../../services/user/get-user-by-id';
 import { UpdateUser } from '../../services/user/update-user';
 import Swal from 'sweetalert2';
+import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
   selector: 'app-profile-user',
@@ -70,7 +71,12 @@ export class ProfileUser {
       buttonsStyling: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this._updateUserService.execute(this.id_user, this.profileForm.value).subscribe({
+        const sanitizedUserUpdate = {
+          username: sanitizeInput(this.profileForm.value.username),
+          email: this.profileForm.value.email,
+          password: this.profileForm.value.password
+        }
+        this._updateUserService.execute(this.id_user, sanitizedUserUpdate).subscribe({
           next: () => {
             Swal.fire({
               title: 'Success',

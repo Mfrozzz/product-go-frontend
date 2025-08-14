@@ -6,6 +6,7 @@ import { Product } from '../../models/product';
 import { ShowProduct } from '../../services/product/show-product';
 import { UpdateProductService } from '../../services/product/update-product';
 import Swal from 'sweetalert2';
+import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
   selector: 'app-update-product',
@@ -53,7 +54,11 @@ export class UpdateProduct {
       buttonsStyling: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this._updateProductService.execute(this.id_product, payload)?.subscribe({
+        const sanitizedPayload = {
+          name: sanitizeInput(payload.name),
+          price: payload.price
+        }
+        this._updateProductService.execute(this.id_product, sanitizedPayload)?.subscribe({
           next: (res) => {
             Swal.fire({
               title: 'Success',

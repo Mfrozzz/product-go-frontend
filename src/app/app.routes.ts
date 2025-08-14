@@ -9,7 +9,7 @@ import { DetailProduct } from './pages/detail-product/detail-product';
 import { PageNotFound } from './pages/page-not-found/page-not-found';
 import { ProfileUser } from './pages/profile-user/profile-user';
 import { ManageUsers } from './pages/manage-users/manage-users';
-import { MainLayout } from './shared/main-layout/main-layout';
+import { MainLayout } from './shared/layouts/main-layout/main-layout';
 import { DetailUser } from './pages/detail-user/detail-user';
 
 export const routes: Routes = [

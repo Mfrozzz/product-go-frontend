@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CreateProductService } from '../../services/product/create-product';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
   selector: 'app-create-product',
@@ -37,7 +38,13 @@ export class CreateProduct {
 
   async createProduct(){
     this.isSubmitted = true;
-    this._productService.execute(this.productForm.value)?.subscribe({
+
+    const sanitizedProduct = {
+      name: sanitizeInput(this.productForm.value.name),
+      price: this.productForm.value.price
+    };
+
+    this._productService.execute(sanitizedProduct)?.subscribe({
       next: (res) => {
         Swal.fire({
           title: 'Product Created Successfully',
