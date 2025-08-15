@@ -22,6 +22,11 @@ export class Login {
   }
 
   ngOnInit() {
+    if(typeof window === 'undefined') { return }
+    const token = localStorage.getItem("token");
+    if (token) {
+      this._router.navigate(["/p/products"]);
+    }
     this.formLogin = this._formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]]

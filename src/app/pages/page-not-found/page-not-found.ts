@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Footer } from '../../shared/layouts/footer/footer';
 import { Navbar } from '../../shared/layouts/navbar/navbar';
+import { AutoLogoutService } from '../../services/user/auto-logout-service';
 
 @Component({
   selector: 'app-page-not-found',
@@ -26,7 +27,7 @@ export class PageNotFound {
     
   }
 
-  constructor(private _router: Router){
+  constructor(private _router: Router, private autoLogout: AutoLogoutService){
 
   }
 

@@ -22,6 +22,11 @@ export class Register {
   }
 
   ngOnInit() {
+    if(typeof window === 'undefined') { return }
+    const token = localStorage.getItem("token");
+    if (token) {
+      this._router.navigate(["/p/products"]);
+    }
     this.formRegister = this._formBuilder.group({
       username: ["", [Validators.required, Validators.maxLength(50)]],
       email: ["", [Validators.required, Validators.email]],

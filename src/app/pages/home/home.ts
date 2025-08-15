@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Navbar } from '../../shared/layouts/navbar/navbar';
 import { Footer } from '../../shared/layouts/footer/footer';
+import { AutoLogoutService } from '../../services/user/auto-logout-service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class Home {
     
   }
 
-  constructor(){
+  constructor(private autoLogout: AutoLogoutService){
 
   }
 
