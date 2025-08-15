@@ -14,9 +14,6 @@ import { DetailUser } from './pages/detail-user/detail-user';
 import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
-    { path: "", component: Home, title: "Product Go Project" },
-    { path: "register", component: Register, title: "Register" },
-    { path: "login", component: Login, title: "Login" },
     {
         path: "p",
         component: MainLayout,
@@ -31,6 +28,8 @@ export const routes: Routes = [
             { path: "admin/users/:id", component: DetailUser, title: "Detail User" },
         ]
     },
+    { path: "", component: Home, title: "Product Go Project" },
+    { path: "register", component: Register, title: "Register" },
+    { path: "login", component: Login, title: "Login" },
     { path: "**", component: PageNotFound, title: "404" }
-
 ];

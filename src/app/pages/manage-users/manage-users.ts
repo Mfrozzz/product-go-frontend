@@ -22,6 +22,7 @@ export class ManageUsers {
   constructor(private _router: Router, private _cdr: ChangeDetectorRef, private _listUsersService: ListUsers, private _zone: NgZone){}
 
   ngOnInit(){
+    if (typeof window === 'undefined') { return }
     const isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin === "true") {
       this.isAdmin = true;

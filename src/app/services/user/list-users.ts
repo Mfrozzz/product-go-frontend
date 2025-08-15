@@ -14,6 +14,9 @@ export class ListUsers {
 
   execute(): Observable<any> {
     const url = `${this.PATH}/api/admin/users`;
+    if (typeof window === 'undefined') { 
+      throw new Error("This method cannot be called on the server side.");
+    }
     return this._http.get(url, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`

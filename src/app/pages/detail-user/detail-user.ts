@@ -42,6 +42,7 @@ export class DetailUser {
       email: ["", [Validators.required, Validators.email]],
       role: ["", [Validators.required]]
     });
+    if (typeof window === 'undefined') { return }
     this.getUser();
     const isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin === "true") {

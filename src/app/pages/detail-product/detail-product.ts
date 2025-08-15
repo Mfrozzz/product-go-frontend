@@ -29,6 +29,7 @@ export class DetailProduct {
   ngOnInit() {
     const param = this._actRoute.snapshot.paramMap.get("id");
     this.id_product = param ? Number(param) : null;
+    if (typeof window === 'undefined') { return }
     const isAdmin = localStorage.getItem("isAdmin");
     if (isAdmin === "true") {
       this.isAdmin = true;

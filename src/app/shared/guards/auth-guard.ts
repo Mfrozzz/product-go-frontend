@@ -4,6 +4,9 @@ import { inject } from '@angular/core';
 import Swal from 'sweetalert2';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  if (typeof window === 'undefined') { 
+    return true;
+  }
   const token = localStorage.getItem('token');
   const router = inject(Router);
   if (!token || isTokenExpired(token)) {

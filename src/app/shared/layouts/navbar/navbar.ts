@@ -98,6 +98,9 @@ export class Navbar {
   }
 
   logout() {
+    if (typeof window === 'undefined') { 
+      return;
+    }
     localStorage.removeItem('token');
     this.isLogged = false;
     if(this.isAdmin){

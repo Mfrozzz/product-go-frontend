@@ -14,6 +14,9 @@ export class UpdateUser {
 
   execute(id_user: any, userData: any) {
     const url = `${this.PATH}/api/users/${id_user}`;
+    if (typeof window === 'undefined') { 
+      throw new Error("This method cannot be called on the server side.");
+    }
     const user = this._http.put<HttpEvent<User>>(url, userData, {
       reportProgress: true,
       observe: "response",
