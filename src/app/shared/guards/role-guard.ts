@@ -22,7 +22,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
     },
     buttonsStyling: false
   }).then(() => {
-    router.navigate(['/p/products']);
+    router.navigate(['/go/products']);
   });
   return false;
 };
