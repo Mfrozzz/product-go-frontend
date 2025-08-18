@@ -19,6 +19,12 @@ export class ManageUsers {
   hasUsers: boolean = false;
   usersLoaded: boolean = false;
 
+  search = '';
+  page = 1;
+  perPage = 10;
+  sortField: string = 'username';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
   constructor(private _router: Router, private _cdr: ChangeDetectorRef, private _listUsersService: ListUsers, private _zone: NgZone){}
 
   ngOnInit(){
@@ -38,7 +44,7 @@ export class ManageUsers {
         confirmButtonText: 'OK',
         buttonsStyling: false,
       }).then(()=>{
-        this._router.navigate(['/p/products']);
+        this._router.navigate(['/go/products']);
       });
     }
     this.getAllUsers();
@@ -72,14 +78,42 @@ export class ManageUsers {
     this._cdr.detectChanges();
   }
 
-  search = '';
-  page = 1;
-  perPage = 10;
-
   get filteredUsers() {
-    return this.listUsers.filter(u =>
-      u.username?.toLowerCase().includes(this.search.toLowerCase())
+    let result = (this.listUsers ?? [] ).filter(u =>
+      typeof u.username && u.username?.toLowerCase().includes(this.search.toLowerCase())
     );
+    
+    if (this.sortField) {
+      result = result.sort((a: any, b: any) => {
+        const valueA = a[this.sortField];
+        const valueB = b[this.sortField];
+
+        if (valueA == null || valueB == null) return 0;
+        
+        if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return this.sortDirection === 'asc'
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        }
+        
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+        }
+        
+        return 0;
+      });
+    }
+    
+    return result;
+  }
+
+  changeSort(field: string) {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
   }
 
   get totalPages() {
@@ -100,7 +134,7 @@ export class ManageUsers {
   }
 
   gotoDetails(id_user: number) {
-    this._router.navigate([`/p/admin/users/${id_user}`]);
+    this._router.navigate([`/go/admin/users/${id_user}`]);
   }
 
   prevPage() {

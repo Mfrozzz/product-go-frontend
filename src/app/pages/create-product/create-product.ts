@@ -57,7 +57,7 @@ export class CreateProduct {
           confirmButtonText: 'OK'
         }).then(()=>{
           this.productForm.reset();
-          this._router.navigate(['/p/products']);
+          this._router.navigate(['/go/products']);
         });
       },
       error: (err) => {

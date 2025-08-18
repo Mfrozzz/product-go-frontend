@@ -22,6 +22,8 @@ export class ListProduct {
   search = '';
   page = 1;
   perPage = 10;
+  sortField: string = 'name';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(private _router: Router, private _listProductsService: ListProducts, private _cdr: ChangeDetectorRef, private _zone: NgZone){ }
 
@@ -58,10 +60,42 @@ export class ListProduct {
   }
 
   get filteredProducts() {
-    return (this.products ?? []).filter(p =>
+    let result = (this.products ?? []).filter(p =>
       typeof p.name === 'string' && p.name.toLowerCase().includes(this.search.toLowerCase())
     );
+
+    if (this.sortField) {
+      result = result.sort((a: any, b: any) => {
+        const valueA = a[this.sortField];
+        const valueB = b[this.sortField];
+
+        if (valueA == null || valueB == null) return 0;
+
+        if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return this.sortDirection === 'asc'
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        }
+
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+        }
+
+        return 0;
+      });
+    }
+
+    return result;
   }
+
+  changeSort(field: string) {
+  if (this.sortField === field) {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  } else {
+    this.sortField = field;
+    this.sortDirection = 'asc';
+  }
+}
 
   get totalPages() {
     return Math.max(1, Math.ceil(this.filteredProducts.length / this.perPage));
@@ -73,11 +107,11 @@ export class ListProduct {
   }
 
   goToDetails(id_product: number){
-    this._router.navigate([`/p/products/${id_product}`]);
+    this._router.navigate([`/go/products/${id_product}`]);
   }
 
   goToCreateProduct(){
-    this._router.navigate(["/p/products/create"]);
+    this._router.navigate(["/go/products/create"]);
   }
 
   onSearchChange() {

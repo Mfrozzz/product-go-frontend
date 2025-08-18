@@ -25,7 +25,7 @@ export class Register {
     if(typeof window === 'undefined') { return }
     const token = localStorage.getItem("token");
     if (token) {
-      this._router.navigate(["/p/products"]);
+      this._router.navigate(["/go/products"]);
     }
     this.formRegister = this._formBuilder.group({
       username: ["", [Validators.required, Validators.maxLength(50)]],

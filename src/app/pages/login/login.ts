@@ -25,7 +25,7 @@ export class Login {
     if(typeof window === 'undefined') { return }
     const token = localStorage.getItem("token");
     if (token) {
-      this._router.navigate(["/p/products"]);
+      this._router.navigate(["/go/products"]);
     }
     this.formLogin = this._formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
@@ -61,7 +61,7 @@ export class Login {
             confirmButtonText: 'OK'
           }).then(()=>{
             this.formLogin.reset();
-            this._router.navigate(['/p/products']);
+            this._router.navigate(['/go/products']);
           });
         } else {
           Swal.fire({

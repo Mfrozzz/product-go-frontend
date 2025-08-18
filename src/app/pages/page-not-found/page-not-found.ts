@@ -36,7 +36,7 @@ export class PageNotFound {
   }
 
   navigateToListPage() {
-    this._router.navigate(["/p/products"]);
+    this._router.navigate(["/go/products"]);
   }
 
 }

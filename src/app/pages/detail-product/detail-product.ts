@@ -43,12 +43,12 @@ export class DetailProduct {
   }
 
   goBack() {
-    this._router.navigate(["/p/products"]);
+    this._router.navigate(["/go/products"]);
   }
 
   editProduct() {
     if (this.id_product !== null) {
-      this._router.navigate([`/p/products/update/${this.id_product}`]);
+      this._router.navigate([`/go/products/update/${this.id_product}`]);
     }
   }
 
@@ -92,7 +92,7 @@ export class DetailProduct {
               buttonsStyling: false,
               confirmButtonText: 'OK'
             });
-            this._router.navigate(["/p/products"]);
+            this._router.navigate(["/go/products"]);
           },
           error: (err) => {
             Swal.fire({

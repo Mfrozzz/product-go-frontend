@@ -12,10 +12,11 @@ import { ManageUsers } from './pages/manage-users/manage-users';
 import { MainLayout } from './shared/layouts/main-layout/main-layout';
 import { DetailUser } from './pages/detail-user/detail-user';
 import { authGuard } from './shared/guards/auth-guard';
+import { roleGuard } from './shared/guards/role-guard';
 
 export const routes: Routes = [
     {
-        path: "p",
+        path: "go",
         component: MainLayout,
         canActivate: [authGuard],
         children: [
@@ -24,8 +25,14 @@ export const routes: Routes = [
             { path: "products/:id", component: DetailProduct, title: "Detail Product" },
             { path: "products/update/:id", component: UpdateProduct, title: "Update Products" },
             { path: "user/:id/profile", component: ProfileUser, title: "User Profile" },
-            { path: "admin/users", component: ManageUsers, title: "Manage Users" },
-            { path: "admin/users/:id", component: DetailUser, title: "Detail User" },
+            {
+                path: "admin",
+                canActivate: [roleGuard],
+                children: [
+                    { path: "users", component: ManageUsers, title: "Manage Users" },
+                    { path: "users/:id", component: DetailUser, title: "Detail User" },
+                ]
+            },
         ]
     },
     { path: "", component: Home, title: "Product Go Project" },
