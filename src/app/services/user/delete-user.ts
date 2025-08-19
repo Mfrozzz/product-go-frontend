@@ -4,20 +4,20 @@ import { HttpClient, HttpEvent } from '@angular/common/http';
 import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class DeleteUser {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute(id_user: number) {
-    const url = `${this.PATH}/api/admin/users/${id_user}`;
-    return this._http.delete<HttpEvent<User>>(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-  }
+	execute(id_user: number) {
+		const url = `${this.PATH}/api/admin/users/${id_user}`;
+		return this._http.delete<HttpEvent<User>>(url, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`
+			}
+		});
+	}
 }

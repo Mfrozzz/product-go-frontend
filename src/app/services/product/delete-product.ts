@@ -5,23 +5,23 @@ import { Product } from '../../models/product';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class DeleteProductService {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute(id_product: number): Observable<HttpEvent<Product>> {
-    const url = `${this.PATH}/api/admin/products/${id_product}`;
-    if (typeof window === 'undefined') { 
-      throw new Error("This method cannot be called on the server side.");
-    }
-    return this._http.delete<HttpEvent<Product>>(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-  }
+	execute(id_product: number): Observable<HttpEvent<Product>> {
+		const url = `${this.PATH}/api/admin/products/${id_product}`;
+		if (typeof window === 'undefined') {
+			throw new Error("This method cannot be called on the server side.");
+		}
+		return this._http.delete<HttpEvent<Product>>(url, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`
+			}
+		});
+	}
 }

@@ -6,37 +6,37 @@ import { Navbar } from '../../shared/layouts/navbar/navbar';
 import { AutoLogoutService } from '../../services/user/auto-logout-service';
 
 @Component({
-  selector: 'app-page-not-found',
-  imports: [CommonModule, Navbar, Footer],
-  templateUrl: './page-not-found.html',
-  styleUrl: './page-not-found.css'
+	selector: 'app-page-not-found',
+	imports: [CommonModule, Navbar, Footer],
+	templateUrl: './page-not-found.html',
+	styleUrl: './page-not-found.css'
 })
 export class PageNotFound {
-  isLogged: boolean = false;
+	isLogged: boolean = false;
 
-  ngOnInit(){
-    if (typeof window === 'undefined') {return}
-    const token = localStorage.getItem("token");
+	ngOnInit() {
+		if (typeof window === 'undefined') { return }
+		const token = localStorage.getItem("token");
 
-    if (!token) {
-      this.isLogged = false;
-      return;
-    } else {
-      this.isLogged = true;
-    }
-    
-  }
+		if (!token) {
+			this.isLogged = false;
+			return;
+		} else {
+			this.isLogged = true;
+		}
 
-  constructor(private _router: Router, private autoLogout: AutoLogoutService){
+	}
 
-  }
+	constructor(private _router: Router, private autoLogout: AutoLogoutService) {
 
-  navigateToHome() {
-    this._router.navigate([""]);
-  }
+	}
 
-  navigateToListPage() {
-    this._router.navigate(["/go/products"]);
-  }
+	navigateToHome() {
+		this._router.navigate([""]);
+	}
+
+	navigateToListPage() {
+		this._router.navigate(["/go/products"]);
+	}
 
 }

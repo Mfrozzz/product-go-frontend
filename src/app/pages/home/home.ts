@@ -4,19 +4,19 @@ import { Footer } from '../../shared/layouts/footer/footer';
 import { AutoLogoutService } from '../../services/user/auto-logout-service';
 
 @Component({
-  selector: 'app-home',
-  imports: [Navbar, Footer],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+	selector: 'app-home',
+	imports: [Navbar, Footer],
+	templateUrl: './home.html',
+	styleUrl: './home.css'
 })
 export class Home {
 
-  ngOnInit(){
-    
-  }
+	ngOnInit() {
 
-  constructor(private autoLogout: AutoLogoutService){
+	}
 
-  }
+	constructor(private autoLogout: AutoLogoutService) {
+
+	}
 
 }

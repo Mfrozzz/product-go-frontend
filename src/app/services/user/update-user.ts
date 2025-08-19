@@ -4,27 +4,27 @@ import { HttpClient, HttpEvent } from '@angular/common/http';
 import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class UpdateUser {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute(id_user: any, userData: any) {
-    const url = `${this.PATH}/api/users/${id_user}`;
-    if (typeof window === 'undefined') { 
-      throw new Error("This method cannot be called on the server side.");
-    }
-    const user = this._http.put<HttpEvent<User>>(url, userData, {
-      reportProgress: true,
-      observe: "response",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-    return user;
-  }
+	execute(id_user: any, userData: any) {
+		const url = `${this.PATH}/api/users/${id_user}`;
+		if (typeof window === 'undefined') {
+			throw new Error("This method cannot be called on the server side.");
+		}
+		const user = this._http.put<HttpEvent<User>>(url, userData, {
+			reportProgress: true,
+			observe: "response",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`
+			}
+		});
+		return user;
+	}
 
 }

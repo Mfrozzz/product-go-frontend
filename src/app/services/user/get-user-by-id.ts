@@ -5,24 +5,24 @@ import { Observable, throwError } from 'rxjs';
 import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class GetUserById {
 
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute(id_user: any): Observable<any>{
-    const url = `${this.PATH}/api/users/${id_user}`;
-    if (typeof window === 'undefined') {
-      return throwError(() => new Error('localStorage not available'));
-    }
-    return this._http.get<User>(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-  }
+	execute(id_user: any): Observable<any> {
+		const url = `${this.PATH}/api/users/${id_user}`;
+		if (typeof window === 'undefined') {
+			return throwError(() => new Error('localStorage not available'));
+		}
+		return this._http.get<User>(url, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`
+			}
+		});
+	}
 }

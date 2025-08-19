@@ -10,242 +10,242 @@ import Swal from 'sweetalert2';
 import { sanitizeInput } from '../../shared/utils/sanitize';
 
 @Component({
-  selector: 'app-detail-user',
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './detail-user.html',
-  styleUrl: './detail-user.css'
+	selector: 'app-detail-user',
+	imports: [CommonModule, ReactiveFormsModule],
+	templateUrl: './detail-user.html',
+	styleUrl: './detail-user.css'
 })
 export class DetailUser {
-  isAdmin = false;
-  isSuperAdmin = false;
-  user: User | undefined = undefined;
-  id_user: number | null = null;
-  activeTab: 'info' | 'edit' = 'info';
-  errorMessage: string = "";
-  profileForm!: FormGroup;
-  isSubmitted = false;
-  loggedUserId: number | null = null;
+	isAdmin = false;
+	isSuperAdmin = false;
+	user: User | undefined = undefined;
+	id_user: number | null = null;
+	activeTab: 'info' | 'edit' = 'info';
+	errorMessage: string = "";
+	profileForm!: FormGroup;
+	isSubmitted = false;
+	loggedUserId: number | null = null;
 
-  constructor(
-    private _router: Router,
-    private _actRoute: ActivatedRoute,
-    private _formBuilder: FormBuilder,
-    private _showUserService: GetUserById,
-    private _cdr: ChangeDetectorRef,
-    private _deleteUserService: DeleteUser,
-    private _updateUserService: UpdateUser
-  ) { }
+	constructor(
+		private _router: Router,
+		private _actRoute: ActivatedRoute,
+		private _formBuilder: FormBuilder,
+		private _showUserService: GetUserById,
+		private _cdr: ChangeDetectorRef,
+		private _deleteUserService: DeleteUser,
+		private _updateUserService: UpdateUser
+	) { }
 
-  ngOnInit(){
-    this.profileForm = this._formBuilder.group({
-      username: ["", [Validators.required, Validators.maxLength(50)]],
-      email: ["", [Validators.required, Validators.email]],
-      role: ["", [Validators.required]]
-    });
-    if (typeof window === 'undefined') { return }
-    this.getUser();
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin === "true") {
-      this.isAdmin = true;
-      const isSuperAdmin = localStorage.getItem("isSuperAdmin");
-      if (isSuperAdmin === "true") {
-        this.isSuperAdmin = true;
-      }
-    }
-  }
+	ngOnInit() {
+		this.profileForm = this._formBuilder.group({
+			username: ["", [Validators.required, Validators.maxLength(50)]],
+			email: ["", [Validators.required, Validators.email]],
+			role: ["", [Validators.required]]
+		});
+		if (typeof window === 'undefined') { return }
+		this.getUser();
+		const isAdmin = localStorage.getItem("isAdmin");
+		if (isAdmin === "true") {
+			this.isAdmin = true;
+			const isSuperAdmin = localStorage.getItem("isSuperAdmin");
+			if (isSuperAdmin === "true") {
+				this.isSuperAdmin = true;
+			}
+		}
+	}
 
-  deleteUser() {
-    if (!this.user || this.id_user === null) {
-      Swal.fire({
-        title: 'Error',
-        text: 'User not loaded or missing ID.',
-        icon: 'error',
-        customClass: {
-          confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
-        },
-        buttonsStyling: false
-      });
-      return;
-    }
+	deleteUser() {
+		if (!this.user || this.id_user === null) {
+			Swal.fire({
+				title: 'Error',
+				text: 'User not loaded or missing ID.',
+				icon: 'error',
+				customClass: {
+					confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+				},
+				buttonsStyling: false
+			});
+			return;
+		}
 
-    Swal.fire({
-      title: 'Are you sure?',
-      text: `This will permanently delete the user with ID ${this.id_user}.`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel',
-      customClass: {
-        confirmButton: 'bg-red-500 hover:bg-red-600 text-white m-2 font-semibold py-2 px-4 rounded',
-        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-gray-800 m-2 font-semibold py-2 px-4 rounded'
-      },
-      buttonsStyling: false
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this._deleteUserService.execute(this.id_user!).subscribe({
-          next: () => {
-            Swal.fire({
-              title: 'Deleted!',
-              text: `User with ID ${this.id_user} deleted successfully.`,
-              icon: 'success',
-              customClass: {
-                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
-              },
-              buttonsStyling: false
-            }).then(() => {
-              this._router.navigate(["/go/admin/users"]);
-            });
-          },
-          error: (err) => {
-            Swal.fire({
-              title: 'Failed',
-              text: err?.error?.message || 'Failed to delete user.',
-              icon: 'error',
-              customClass: {
-                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
-              },
-              buttonsStyling: false
-            });
-          }
-        });
-      }
-    });
-  }
+		Swal.fire({
+			title: 'Are you sure?',
+			text: `This will permanently delete the user with ID ${this.id_user}.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel',
+			customClass: {
+				confirmButton: 'bg-red-500 hover:bg-red-600 text-white m-2 font-semibold py-2 px-4 rounded',
+				cancelButton: 'bg-gray-300 hover:bg-gray-400 text-gray-800 m-2 font-semibold py-2 px-4 rounded'
+			},
+			buttonsStyling: false
+		}).then((result) => {
+			if (result.isConfirmed) {
+				this._deleteUserService.execute(this.id_user!).subscribe({
+					next: () => {
+						Swal.fire({
+							title: 'Deleted!',
+							text: `User with ID ${this.id_user} deleted successfully.`,
+							icon: 'success',
+							customClass: {
+								confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+							},
+							buttonsStyling: false
+						}).then(() => {
+							this._router.navigate(["/go/admin/users"]);
+						});
+					},
+					error: (err) => {
+						Swal.fire({
+							title: 'Failed',
+							text: err?.error?.message || 'Failed to delete user.',
+							icon: 'error',
+							customClass: {
+								confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+							},
+							buttonsStyling: false
+						});
+					}
+				});
+			}
+		});
+	}
 
 
-  
-  goBack() {
-    this._router.navigate(["/go/admin/users"]);
-  }
-  
-  getUser(){
-    this.id_user = Number(this._actRoute.snapshot.paramMap.get("id"));
-    this.loggedUserId = Number(localStorage.getItem("id_user"));
-    this._showUserService.execute(this.id_user).subscribe((user: User) => {
-      this.user = user;
-      this.profileForm.patchValue({
-        username: user.username,
-        email: user.email,
-        role: user.role
-      });
-      this._cdr.detectChanges();
-    });
-  }
-  
-  onSubmit(){
-    if(!this.profileForm.valid) {
-      this.errorMessage = "Please fill in all required fields.";
-      this.isSubmitted = true;
-      return;
-    }
 
-    this.updateUser();
-  }
-  
-  updateUser() {
-    this.isSubmitted = true;
+	goBack() {
+		this._router.navigate(["/go/admin/users"]);
+	}
 
-    Swal.fire({
-      title: 'Confirm your Update action.',
-      text: "This action cannot be undone.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, update it!',
-      customClass: {
-        confirmButton: 'bg-yellow-500 hover:bg-yellow-600 text-white m-2 font-semibold py-2 px-4 rounded',
-        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
-      },
-      buttonsStyling: false,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const sanitizedUserUpdate = {
-          username: sanitizeInput(this.profileForm.value.username),
-          email: this.profileForm.value.email,
-          role: this.profileForm.value.role
-        }
-        this._updateUserService.execute(this.id_user, sanitizedUserUpdate).subscribe({
-          next: () => {
-            Swal.fire({
-              title: 'Success',
-              text: 'User updated successfully.',
-              icon: 'success',
-              customClass: {
-                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
-              },
-              buttonsStyling: false
-            }).then(()=>{
-              this.profileForm.reset();
-              this._router.navigate(["/go/admin/users"]);
-            });
-          },
-          error: (err) => {
-            this.errorMessage = err?.error?.message || 'Update failed.';
-            Swal.fire({
-              title: 'Error',
-              text: this.errorMessage,
-              icon: 'error',
-              customClass: {
-                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
-              },
-              buttonsStyling: false
-            });
-          }
-        });
-      }
-    });
-  }
+	getUser() {
+		this.id_user = Number(this._actRoute.snapshot.paramMap.get("id"));
+		this.loggedUserId = Number(localStorage.getItem("id_user"));
+		this._showUserService.execute(this.id_user).subscribe((user: User) => {
+			this.user = user;
+			this.profileForm.patchValue({
+				username: user.username,
+				email: user.email,
+				role: user.role
+			});
+			this._cdr.detectChanges();
+		});
+	}
 
-  canDeleteUser(): boolean {
-    if (!this.user || this.loggedUserId === null) return false;
+	onSubmit() {
+		if (!this.profileForm.valid) {
+			this.errorMessage = "Please fill in all required fields.";
+			this.isSubmitted = true;
+			return;
+		}
 
-    const targetRole = this.user.role;
-    const targetId = this.user.id_user;
+		this.updateUser();
+	}
 
-    if (this.isSuperAdmin && this.loggedUserId === targetId && targetRole === 'super_admin') {
-      return false;
-    }
+	updateUser() {
+		this.isSubmitted = true;
 
-    if (this.isSuperAdmin) {
-      return true;
-    }
+		Swal.fire({
+			title: 'Confirm your Update action.',
+			text: "This action cannot be undone.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, update it!',
+			customClass: {
+				confirmButton: 'bg-yellow-500 hover:bg-yellow-600 text-white m-2 font-semibold py-2 px-4 rounded',
+				cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black m-2 font-semibold py-2 px-4 rounded'
+			},
+			buttonsStyling: false,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				const sanitizedUserUpdate = {
+					username: sanitizeInput(this.profileForm.value.username),
+					email: this.profileForm.value.email,
+					role: this.profileForm.value.role
+				}
+				this._updateUserService.execute(this.id_user, sanitizedUserUpdate).subscribe({
+					next: () => {
+						Swal.fire({
+							title: 'Success',
+							text: 'User updated successfully.',
+							icon: 'success',
+							customClass: {
+								confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded'
+							},
+							buttonsStyling: false
+						}).then(() => {
+							this.profileForm.reset();
+							this._router.navigate(["/go/admin/users"]);
+						});
+					},
+					error: (err) => {
+						this.errorMessage = err?.error?.message || 'Update failed.';
+						Swal.fire({
+							title: 'Error',
+							text: this.errorMessage,
+							icon: 'error',
+							customClass: {
+								confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded'
+							},
+							buttonsStyling: false
+						});
+					}
+				});
+			}
+		});
+	}
 
-    if (this.isAdmin && targetRole === 'user') {
-      return true;
-    }
+	canDeleteUser(): boolean {
+		if (!this.user || this.loggedUserId === null) return false;
 
-    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'admin'){
-      return false;
-    }
+		const targetRole = this.user.role;
+		const targetId = this.user.id_user;
 
-    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin'){
-      return false;
-    }
+		if (this.isSuperAdmin && this.loggedUserId === targetId && targetRole === 'super_admin') {
+			return false;
+		}
 
-    return false;
-  }
-  
-  canUpdateUser(): boolean {
-    if (!this.user || this.loggedUserId === null) return false;
+		if (this.isSuperAdmin) {
+			return true;
+		}
 
-    const targetRole = this.user.role;
+		if (this.isAdmin && targetRole === 'user') {
+			return true;
+		}
 
-    if (this.isSuperAdmin) {
-      return true;
-    }
+		if (this.isAdmin && !this.isSuperAdmin && targetRole === 'admin') {
+			return false;
+		}
 
-    if (this.isAdmin && targetRole === 'user') {
-      return true;
-    }
+		if (this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin') {
+			return false;
+		}
 
-    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'admin'){
-      return false;
-    }
+		return false;
+	}
 
-    if(this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin'){
-      return false;
-    }
+	canUpdateUser(): boolean {
+		if (!this.user || this.loggedUserId === null) return false;
 
-    return false;
-  }
+		const targetRole = this.user.role;
+
+		if (this.isSuperAdmin) {
+			return true;
+		}
+
+		if (this.isAdmin && targetRole === 'user') {
+			return true;
+		}
+
+		if (this.isAdmin && !this.isSuperAdmin && targetRole === 'admin') {
+			return false;
+		}
+
+		if (this.isAdmin && !this.isSuperAdmin && targetRole === 'super_admin') {
+			return false;
+		}
+
+		return false;
+	}
 
 }

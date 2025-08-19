@@ -5,21 +5,21 @@ import { environment } from '../../../environments/environment.development';
 import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class CreateUser {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
-  
-  execute(userData: any){
-    const url = `${this.PATH}/register`;
-    const user = this._http.post<HttpEvent<User>>(url, userData, {
-      reportProgress: true,
-      observe: 'events'
-    });
-    return user;
-  }
+	constructor() { }
+
+	execute(userData: any) {
+		const url = `${this.PATH}/register`;
+		const user = this._http.post<HttpEvent<User>>(url, userData, {
+			reportProgress: true,
+			observe: 'events'
+		});
+		return user;
+	}
 
 }

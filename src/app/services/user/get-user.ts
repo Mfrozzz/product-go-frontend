@@ -5,21 +5,21 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class GetUser {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute(token: any): Observable<any>{
-    const url = `${this.PATH}/api/user/info`;
-    return this._http.get<User>(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  }
+	execute(token: any): Observable<any> {
+		const url = `${this.PATH}/api/user/info`;
+		return this._http.get<User>(url, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+	}
 
 }

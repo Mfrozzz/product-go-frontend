@@ -4,24 +4,24 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ListProducts {
-  private PATH = environment.apiUrl;
-  private _http = inject(HttpClient);
+	private PATH = environment.apiUrl;
+	private _http = inject(HttpClient);
 
-  constructor() { }
+	constructor() { }
 
-  execute():Observable<any>{
-    const url = `${this.PATH}/api/products`;
-    if (typeof window === 'undefined') { 
-      throw new Error("This method cannot be called on the server side.");
-    }
-    return this._http.get(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-  }
+	execute(): Observable<any> {
+		const url = `${this.PATH}/api/products`;
+		if (typeof window === 'undefined') {
+			throw new Error("This method cannot be called on the server side.");
+		}
+		return this._http.get(url, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`
+			}
+		});
+	}
 
 }
