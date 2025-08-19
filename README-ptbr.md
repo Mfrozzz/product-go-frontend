@@ -86,12 +86,17 @@ Você pode customizar ou estender os estilos como desejar.
 ## <span id="features">Funcionalidades ✨</span>
 
 - **Autenticação**: Cadastro, login e gerenciamento de sessão baseado em JWT.
+  - Guard e interceptor para proteger as rotas e verificar os cabeçalhos.
+  - Recurso de logout automático para evitar inatividade.
 - **Controle de acesso por função:** Perfis de super_admin, administrador e usuário, com funcionalidades exclusivas para cada papel. O super_admin possui acesso total ao sistema, incluindo a gestão de administradores.
+  - Guard de função para proteger as rotas e páginas administrativas.
 - **Gerenciamento de produtos**: Listar, criar, atualizar e excluir produtos.
 - **Gerenciamento de usuários**: Visualizar e atualizar o perfil do usuário; o administrador pode gerenciar todos os usuários.
 - **Paginação e busca**: Para produtos e usuários.
+  - Ordenação de produtos e usuários por nome.
 - **Interface responsiva**: Desenvolvida com Angular e CSS moderno.
 - **Tratamento de erros**: Mensagens amigáveis para erros da API e de validação.
+  - Sanitizar entradas para evitar injeções de XSS.
 
 > **Nota:** O papel super_admin possui todas as permissões de admin, podendo ainda promover/demitir outros admins e acessar recursos exclusivos de gerenciamento avançado.
 
@@ -208,6 +213,8 @@ product-go-frontend/
 |   |   |   |   ├── update-product.ts
 |   |   |   |   └── update-product.spec.ts
 |   |   |   └── user/
+|   |   |       ├── auto-logout-service.spec.ts
+|   |   |       ├── auto-logout-service.ts
 |   |   |       ├── create-user.ts
 |   |   |       ├── create-user.spec.ts
 |   |   |       ├── delete-user.ts
@@ -223,21 +230,33 @@ product-go-frontend/
 |   |   |       ├── update-user.ts
 |   |   |       └── update-user.spec.ts
 |   |   ├── shared/
-|   |   |   ├── footer/
-|   |   |   |   ├── footer.css
-|   |   |   |   ├── footer.html
-|   |   |   |   ├── footer.spec.ts
-|   |   |   |   └── footer.ts
-|   |   |   ├── main-layout/
-|   |   |   |   ├── main-layout.css
-|   |   |   |   ├── main-layout.html
-|   |   |   |   ├── main-layout.spec.ts
-|   |   |   |   └── main-layout.ts
-|   |   |   └── navbar/
-|   |   |       ├── navbar.css
-|   |   |       ├── navbar.html
-|   |   |       ├── navbar.spec.ts
-|   |   |       └── navbar.ts
+|   |   |   ├── guards/
+|   |   |   |   ├── auth-guard.spec.ts
+|   |   |   |   ├── auth-guard.ts
+|   |   |   |   ├── role-guard.spec.ts
+|   |   |   |   └── role-guard.ts
+|   |   |   ├── interceptors/
+|   |   |   |   ├── auth-interceptor-interceptor.spec.ts
+|   |   |   |   └── auth-interceptor-interceptor.ts
+|   |   |   ├── layouts/
+|   |   |   |   ├── footer/
+|   |   |   |   |   ├── footer.css
+|   |   |   |   |   ├── footer.html
+|   |   |   |   |   ├── footer.spec.ts
+|   |   |   |   |   └── footer.ts
+|   |   |   |   ├── main-layout/
+|   |   |   |   |   ├── main-layout.css
+|   |   |   |   |   ├── main-layout.html
+|   |   |   |   |   ├── main-layout.spec.ts
+|   |   |   |   |   └── main-layout.ts
+|   |   |   |   └── navbar/
+|   |   |   |       ├── navbar.css
+|   |   |   |       ├── navbar.html
+|   |   |   |       ├── navbar.spec.ts
+|   |   |   |       └── navbar.ts
+|   |   |   └── utils/
+|   |   |       ├── isTokenExpired.ts
+|   |   |       └── sanitize.ts
 |   |   ├── app.config.server.ts
 |   |   ├── app.config.ts
 |   |   ├── app.css

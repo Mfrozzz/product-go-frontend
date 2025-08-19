@@ -89,13 +89,13 @@ export class ListProduct {
   }
 
   changeSort(field: string) {
-  if (this.sortField === field) {
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  } else {
-    this.sortField = field;
-    this.sortDirection = 'asc';
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
   }
-}
 
   get totalPages() {
     return Math.max(1, Math.ceil(this.filteredProducts.length / this.perPage));
